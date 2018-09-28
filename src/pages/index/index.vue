@@ -7,6 +7,7 @@
         <!--<span class="icon"></span>-->
       <!--</div>-->
     <!--</div>-->
+
     <div class="swiper">
       <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in banner " :key="index">
