@@ -72,7 +72,7 @@
     }
   }
   .swiperReward{
-    position: absolute;
+    position: fixed;
     top: 16px;
     left: 10px;
     height: 28px;
@@ -116,7 +116,10 @@
     //padding: 20rpx 0;
     //background: #ffffff;
     margin-top: 5px;
-    //ul {
+
+    ul {
+      width: calc(100% - 10px);
+      margin: 0 auto;
       .scroll-view {
         width: 100%; // height: 470rpx; // display: flex;
         // flex-wrap: nowrap;
@@ -125,7 +128,7 @@
         li {
           min-width: 60px;
           height: 30px;
-          margin: 5rpx 0 5rpx 25rpx;
+          margin: 0 5px;
           display: inline-block;
 
           span.rewardTextSpan {
@@ -159,7 +162,7 @@
           }
         }
       }
-    //}
+    }
     div {
       width: 25%;
       text-align: center;
@@ -420,25 +423,32 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      width: 730rpx;
+      width: 100%;
+      height: 373px;
       margin: 0 auto;
 
       div {
-        width: 360rpx;
+        width: 100%;
+        height: 100%;
         background: #fff;
         margin-bottom: 10rpx;
         padding-bottom: 10rpx;
 
         img {
           display: block;
-          width: 302rpx;
-          height: 302rpx;
+          width: 100%;
+          height: calc(100% - 50px);
           margin: 0 auto;
         }
 
         p {
-          margin-bottom: 5rpx;
+          margin-bottom: 2px;
           text-indent: 1em;
+          font-size: 14px;
+          color: rgba(16, 16, 16, 1);
+          text-align: left;
+          font-family: SourceHanSansSC-regular;
+
         }
 
         p:nth-child(2) {
@@ -449,7 +459,41 @@
         }
 
         p:nth-child(3) {
-          color: #9c3232;
+          font-size: 16px;
+          font-family: Arial;
+          line-height: 23px;
+
+          span.realPrice{
+            display: inline-block;
+            text-align: left;
+            color: rgba(237, 23, 9, 1);
+            text-indent: 0em;
+          }
+          span.virtualPrice{
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 12px;
+            text-align: left;
+            color: rgba(102, 100, 102, 1);
+            text-decoration:line-through;
+            text-indent: 0em;
+          }
+          span.purchaseImmediately{
+            display: inline-block;
+            width: 73px;
+            height: 23px;
+            float: right;
+            border-radius: 4px;
+            background-color: rgba(229, 28, 35, 1);
+            color: rgba(255, 255, 255, 1);
+            font-size: 14px;
+            text-align: center;
+            font-family: Microsoft Yahei;
+            //border: 1px solid rgba(187, 187, 187, 1);
+            margin-right: 10px;
+            text-indent: 0em;
+          }
+
         }
       }
 

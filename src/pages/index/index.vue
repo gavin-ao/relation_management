@@ -122,12 +122,12 @@
     <!--</div>-->
     <div class="newcategory">
       <div class="list" v-for="(item, index) in newCategoryList" :key="index">
-        <div class="head">{{item.name}}好物</div>
+        <!--<div class="head">{{item.name}}好物</div>-->
         <div class="sublist">
           <div @click="goodsDetail(subitem.id)" v-for="(subitem, subindex) in item.goodsList" :key="subindex">
             <img :src="subitem.list_pic_url" alt="">
             <p>{{subitem.name}}</p>
-            <p>￥{{subitem.retail_price}}</p>
+            <p><span class="realPrice">￥{{subitem.retail_price}}</span><span class="virtualPrice">￥{{subitem.retail_price}}</span><span class="purchaseImmediately">立即购买</span></p>
           </div>
           <div @click="categoryList(item.id)">
             <div class="last">
@@ -160,6 +160,9 @@ export default {
   },
   mounted() {
     this.getData();
+    wx.setNavigationBarTitle({
+      title: "首页"
+    })
   },
   data() {
     return {
