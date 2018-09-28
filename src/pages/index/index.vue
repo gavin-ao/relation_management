@@ -40,85 +40,85 @@
         </scroll-view>
       </ul>
     </div>
-    <div class="brand">
-      <div @click="tobrandList" class="head">
-        品牌制造商直供
-      </div>
-      <div class="content">
-        <div @click="branddetail(item.id)" v-for="(item, index) in brandList" :key="index">
-          <div>
-            <p>{{item.name}}</p>
-            <p>{{item.floor_price}}元起</p>
-          </div>
-          <img :src="item.new_pic_url" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="newgoods">
-      <div @click="goodsList('new')" class="newgoods-top">
-        <div class="top">
-          <p>新品首发</p>
-          <p>查看全部</p>
-        </div>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" scroll-x>
-            <li @click="goodsDetail(item.id)" v-for="(item, index) in newGoods" :key="index">
-              <img :src="item.list_pic_url" alt="">
-              <p>{{item.name}}</p>
-              <p>{{item.goods_brief}}</p>
-              <p>￥{{item.retail_price}}</p>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
-    <div class="newgoods hotgoods">
-      <div @click="goodsList('hot')" class="newgoods-top">
-        <div class="top">
-          <p>人气推荐
-            <span></span> 好物精选</p>
-          <p>查看全部</p>
-        </div>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="goodsDetail(item.id)" v-for="(item, index) in hotGoods" :key="index">
-              <img :src="item.list_pic_url" alt="">
-              <p>{{item.name}}</p>
-              <p>{{item.goods_brief}}</p>
-              <p>￥{{item.retail_price}}</p>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
-    <div class="topicList">
-      <div @click="totopic" class="topicList-top">
-        专题精选
-        <span class="icon"></span>
-      </div>
-      <div class="list">
-        <ul>
-          <scroll-view class="scroll-view" :scroll-x="true">
-            <li @click="topicdetail(item.id)" v-for="(item, index) in topicList" :key="index">
-              <img :src="item.item_pic_url" alt="">
-              <div class="btom">
-                <div>
-                  <p>{{item.title}}</p>
-                  <p>{{item.subtitle}}</p>
-                </div>
-                <div>
-                  {{item.price_info}}元起
-                </div>
-              </div>
-            </li>
-          </scroll-view>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="brand">-->
+      <!--<div @click="tobrandList" class="head">-->
+        <!--品牌制造商直供-->
+      <!--</div>-->
+      <!--<div class="content">-->
+        <!--<div @click="branddetail(item.id)" v-for="(item, index) in brandList" :key="index">-->
+          <!--<div>-->
+            <!--<p>{{item.name}}</p>-->
+            <!--<p>{{item.floor_price}}元起</p>-->
+          <!--</div>-->
+          <!--<img :src="item.new_pic_url" alt="">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="newgoods">-->
+      <!--<div @click="goodsList('new')" class="newgoods-top">-->
+        <!--<div class="top">-->
+          <!--<p>新品首发</p>-->
+          <!--<p>查看全部</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" scroll-x>-->
+            <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in newGoods" :key="index">-->
+              <!--<img :src="item.list_pic_url" alt="">-->
+              <!--<p>{{item.name}}</p>-->
+              <!--<p>{{item.goods_brief}}</p>-->
+              <!--<p>￥{{item.retail_price}}</p>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="newgoods hotgoods">-->
+      <!--<div @click="goodsList('hot')" class="newgoods-top">-->
+        <!--<div class="top">-->
+          <!--<p>人气推荐-->
+            <!--<span></span> 好物精选</p>-->
+          <!--<p>查看全部</p>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="goodsDetail(item.id)" v-for="(item, index) in hotGoods" :key="index">-->
+              <!--<img :src="item.list_pic_url" alt="">-->
+              <!--<p>{{item.name}}</p>-->
+              <!--<p>{{item.goods_brief}}</p>-->
+              <!--<p>￥{{item.retail_price}}</p>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="topicList">-->
+      <!--<div @click="totopic" class="topicList-top">-->
+        <!--专题精选-->
+        <!--<span class="icon"></span>-->
+      <!--</div>-->
+      <!--<div class="list">-->
+        <!--<ul>-->
+          <!--<scroll-view class="scroll-view" :scroll-x="true">-->
+            <!--<li @click="topicdetail(item.id)" v-for="(item, index) in topicList" :key="index">-->
+              <!--<img :src="item.item_pic_url" alt="">-->
+              <!--<div class="btom">-->
+                <!--<div>-->
+                  <!--<p>{{item.title}}</p>-->
+                  <!--<p>{{item.subtitle}}</p>-->
+                <!--</div>-->
+                <!--<div>-->
+                  <!--{{item.price_info}}元起-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</scroll-view>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="newcategory">
       <div class="list" v-for="(item, index) in newCategoryList" :key="index">
         <div class="head">{{item.name}}好物</div>
