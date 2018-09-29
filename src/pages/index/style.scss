@@ -3,59 +3,9 @@
   overflow: hidden;
   position: relative;
 
-  //.search {
-  //  width: 100%;
-  //  box-sizing: border-box;
-  //  padding: 0 25rpx 0 10rpx;
-  //  position: fixed;
-  //  top: 0;
-  //  z-index: 99;
-  //  height: 80rpx;
-  //  display: flex;
-  //  align-items: center;
-  //  background: #fff;
-  //
-  //  div:nth-child(1) {
-  //    width: 115rpx;
-  //    text-align: center;
-  //    overflow: hidden;
-  //    white-space: nowrap;
-  //    text-overflow: ellipsis;
-  //    font-size: 20rpx;
-  //    padding-right: 15rpx;
-  //  }
-  //
-  //  div:nth-child(2) {
-  //    flex: 1;
-  //    position: relative;
-  //
-  //    input {
-  //      width: 100%;
-  //      height: 56rpx;
-  //      border-radius: 8rpx;
-  //      background: #ededed;
-  //      box-sizing: border-box;
-  //      padding-left: 40rpx;
-  //    }
-  //
-  //    .icon {
-  //      position: absolute;
-  //      top: 15rpx;
-  //      left: 10rpx;
-  //      background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
-  //      background-size: 100%;
-  //      width: 28rpx;
-  //      height: 28rpx;
-  //      margin-right: 10rpx;
-  //    }
-  //  }
-  //}
-
   .swiper {
     width: 100%;
-    height: 417rpx;
-    //margin-top: 80rpx;
-
+    height: 208px;
     .swiper-container {
       width: 100%;
       height: 100%;
@@ -76,7 +26,6 @@
     top: 16px;
     left: 10px;
     height: 28px;
-    //opacity: 0.38;
     border-radius: 14px;
     min-width: 182px;
     background-color: rgba(16, 16, 16, .38);
@@ -112,19 +61,13 @@
 
   }
   .channel {
-    //display: flex;
-    //padding: 20rpx 0;
-    //background: #ffffff;
     margin-top: 5px;
-
     ul {
       width: calc(100% - 10px);
       margin: 0 auto;
       .scroll-view {
-        width: 100%; // height: 470rpx; // display: flex;
-        // flex-wrap: nowrap;
+        width: 100%;
         white-space: nowrap;
-
         li {
           min-width: 60px;
           height: 30px;
@@ -142,15 +85,13 @@
             font-size: 15px;
             line-height: 22px;
             float: left;
-            //border-bottom: 2px solid red;
           }
           span.spanLine{
             width: 80%;
+            display: none;
             margin-left: 10%;
-            display: inline-block;
             text-align: center;
             height: 1px;
-            //background-color: red;
             float: left;
             border-bottom: 2px solid red;
           }
@@ -158,267 +99,16 @@
             color: red;
           }
           span.spanLine.changeHideShow{
-            display: none;
-          }
-        }
-      }
-    }
-    div {
-      width: 25%;
-      text-align: center;
-
-      img {
-        height: 58rpx;
-        width: 58rpx;
-        display: inline-block;
-      }
-    }
-  }
-
-  .brand {
-    width: 100%;
-    margin-top: 20rpx;
-    background: #ffffff;
-
-    .head {
-      text-align: center;
-      padding: 40rpx 0;
-    }
-
-    .content {
-      width: 730rpx;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      div {
-        width: 360rpx;
-        height: 235rpx;
-        margin-bottom: 10rpx;
-        position: relative;
-
-        div {
-          position: absolute;
-          top: 0;
-          left: 0;
-          padding: 10rpx;
-
-          p:nth-child(2) {
-            font-size: 24rpx;
-          }
-        }
-
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-  }
-
-  .newgoods {
-    .newgoods-top {
-      margin-top: 20rpx;
-      height: 260rpx;
-      width: 100%;
-      background: url('../../../static/images/bgnew.png') no-repeat;
-      background-size: 100% 100%;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .top {
-        p {
-          color: #8c9bae;
-          font-size: 32rpx;
-        }
-
-        p:nth-child(2) {
-          width: 180rpx;
-          height: 50rpx;
-          line-height: 50rpx;
-          margin: 27rpx auto 0 auto;
-          font-size: 22rpx;
-          background: #d8e4f0;
-        }
-      }
-    }
-
-    .list {
-      margin-top: 20rpx;
-      background: #fff;
-      padding-bottom: 10rpx;
-
-      ul {
-        .scroll-view {
-          width: 100%; // height: 470rpx; // display: flex;
-          // flex-wrap: nowrap;
-          white-space: nowrap;
-
-          li {
-            width: 280rpx;
-            height: 416rpx;
-            margin: 5rpx 0 5rpx 25rpx;
             display: inline-block;
-
-            img {
-              width: 280rpx;
-              height: 280rpx;
-            }
-
-            p:nth-child(2) {
-              font-size: 30rpx;
-              font-weight: bold;
-            }
-
-            p:nth-child(3) {
-              color: #8a8a8a;
-              font-size: 24rpx;
-            }
-
-            p:nth-child(4) {
-              color: #9c3232;
-              font-size: 24rpx;
-            }
-
-            p {
-              width: 94%;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              margin-top: 8rpx;
-              text-indent: 1em;
-            }
           }
-
-          li:nth-child(n+2) {
-            border-left: 1rpx solid #f4f4f4;
-          }
-        }
-      }
-    }
-  }
-
-  .hotgoods {
-    .newgoods-top {
-      background: url('../../../static/images/bgtopic.png') no-repeat;
-      background-size: 100% 100%;
-
-      .top {
-        p {
-          color: #b1a279;
-          font-size: 32rpx;
-          vertical-align: middle;
-        }
-
-        p:nth-child(1) {
-          span {
-            width: 4rpx;
-            height: 4rpx;
-            font-size: 14rpx;
-            display: inline-block;
-            vertical-align: middle;
-            background: #b1a279;
-          }
-        }
-
-        p:nth-child(2) {
-          background: #f4e9cb;
-        }
-      }
-    }
-  }
-
-  .topicList {
-    margin-top: 20rpx;
-    background: #fff;
-
-    .topicList-top {
-      text-align: center;
-      padding: 36rpx;
-      vertical-align: middle;
-
-      .icon {
-        display: inline-block;
-        width: 32rpx;
-        height: 32rpx;
-        margin-left: 5rpx;
-        background: url('../../../static//images/right.png') no-repeat;
-        background-size: 100% 100%;
-        vertical-align: middle;
-      }
-    }
-
-    .list {
-      .scroll-view {
-        white-space: nowrap;
-
-        li {
-          display: inline-block;
-          width: 575rpx;
-          margin-left: 25rpx;
-
-          img {
-            display: block;
-            width: 575rpx;
-            height: 325rpx;
-            border-radius: 10rpx;
-          }
-
-          .btom {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 42rpx;
-            width: 100%;
-
-            div:nth-child(1) {
-              width: 90%;
-
-              p {
-                margin-top: 8rpx;
-              }
-
-              p:nth-child(1) {
-                font-size: 30rpx;
-                font-weight: bold;
-              }
-
-              p:nth-child(2) {
-                width: 90%;
-                color: #8a8a8a;
-                font-size: 24rpx;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              }
-            }
-
-            div:nth-child(2) {
-              margin-top: 8rpx;
-              color: #9c3232;
-              font-size: 24rpx;
-            }
-          }
-        }
-
-        li:last-child {
-          margin-right: 25rpx;
         }
       }
     }
   }
 
   .newcategory {
-    margin-top: 20rpx;
-    padding: 0 10rpx 25rpx 10rpx;
-
-    .head {
-      padding: 25rpx 0;
-      text-align: center;
-    }
-
+    margin-top: 10px;
+    padding: 0 5px 12px 5px;
     .sublist {
       display: flex;
       flex-wrap: wrap;
@@ -431,43 +121,44 @@
         width: 100%;
         height: 100%;
         background: #fff;
-        margin-bottom: 10rpx;
-        padding-bottom: 10rpx;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
 
         img {
           display: block;
           width: 100%;
-          height: calc(100% - 50px);
+          height: calc(100% - 75px);
           margin: 0 auto;
         }
 
         p {
           margin-bottom: 2px;
-          text-indent: 1em;
           font-size: 14px;
           color: rgba(16, 16, 16, 1);
           text-align: left;
+          padding: 0 15px;
           font-family: SourceHanSansSC-regular;
-
         }
-
         p:nth-child(2) {
           overflow: hidden;
           text-overflow: ellipsis;
-          white-space: nowrap;
-          width: 98%;
+          display:-webkit-box; //作为弹性伸缩盒子模型显示。
+          -webkit-box-orient:vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
+          -webkit-line-clamp:2; //显示的行
+          font-size: 14px;
+          color: #101010;
+          height: 35px;
+          margin-bottom: 5px;
         }
 
         p:nth-child(3) {
           font-size: 16px;
           font-family: Arial;
           line-height: 23px;
-
           span.realPrice{
             display: inline-block;
             text-align: left;
             color: rgba(237, 23, 9, 1);
-            text-indent: 0em;
           }
           span.virtualPrice{
             display: inline-block;
@@ -476,7 +167,6 @@
             text-align: left;
             color: rgba(102, 100, 102, 1);
             text-decoration:line-through;
-            text-indent: 0em;
           }
           span.purchaseImmediately{
             display: inline-block;
@@ -489,46 +179,11 @@
             font-size: 14px;
             text-align: center;
             font-family: Microsoft Yahei;
-            //border: 1px solid rgba(187, 187, 187, 1);
-            margin-right: 10px;
-            text-indent: 0em;
           }
-
         }
       }
-
-      .last {
-        display: block;
-        width: 302rpx;
-        height: 302rpx;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        p {
-          height: 33rpx;
-          width: 100%;
-          line-height: 33rpx;
-          color: #333;
-          font-size: 33rpx;
-          text-align: center;
-        }
-
-        .icon {
-          display: inline-block;
-          width: 70rpx;
-          height: 70rpx;
-          background: url('../../../static/images/rightbig.png') no-repeat;
-          background-size: 100% 100%;
-          margin-top: 60rpx;
-        }
-      }
-
       div:nth-child(2n) {
-        margin-left: 10rpx;
+        margin-left: 5px;
       }
     }
   }
