@@ -37,8 +37,6 @@ function login(that, flag, func) {
               if (res.data.success) {
                 console.log(new Date().getTime())
                 that.$store.state.board.sessionID = res.data.sessionID
-                // var currentPages = wx.getStorageSync('currentPages')
-                // that.$store.state.board.headPic=[]
                 var otherHelpId = that.$store.state.board.otherHelpId;
                 var actId = that.$store.state.board.actId;
                 var sessionID = that.$store.state.board.sessionID;

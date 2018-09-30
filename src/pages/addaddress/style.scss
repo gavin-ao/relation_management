@@ -4,36 +4,95 @@
   height: 100%;
   background: #fff;
   .item {
-    width: 690rpx;
-    height: 70rpx;
-    line-height: 70rpx;
+    width: calc(100% - 20px);
+    height: 35px;
+    line-height: 35px;
     margin: 0 auto;
-    padding: 10rpx 0;
-    border-bottom: 1rpx solid #f4f4f4;
-    input {
-      width: 100%;
+    padding: 5px 10px;
+    border-bottom: 1px solid #f4f4f4;
+    display: flex;
+    span {
+      display: inline-block;
+      width: 57px;
+      color: rgba(16, 16, 16, 1);
+      font-size: 14px;
+      text-align: left;
+      font-family: Arial;
+      margin-right: 20px;
+    }
+    input,textarea {
+      flex: 1;
       height: 100%;
+    }
+    picker{
+      flex: 1;
+      height: 35px;
+      input{
+        height: 35px;
+        line-height: 35px;
+      }
+    }
+    .input-placeholder{
+      color: rgba(136, 136, 136, 1);
+      font-size: 14px;
+    }
+
+  }
+  .detailadress{
+    height: 80px;
+    textarea{
+      padding-top: 9px;
     }
   }
   .itemend {
-    margin-top: 40rpx;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     border: none;
+    div:nth-child(1) {
+      width: calc(100% - 20px);
+      padding: 0 10px;
+      span {
+        float: left;
+        width: 95px;
+        height: 23px;
+        color: rgba(16, 16, 16, 1);
+        font-size: 14px;
+        text-align: left;
+        font-family: Arial;
+      }
+      switch {
+        float: right;
+      }
+    }
     div:nth-child(2) {
       color: green;
     }
   }
   .bottom {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    text-align: center;
-    height: 100rpx;
-    line-height: 100rpx;
-    background: #B4282D;
-    color: #fff;
-    font-size: 32rpx;
+    height: 45px;
+    line-height: 45px;
+    div:nth-child(1) {
+      width: 50%;
+      float: left;
+      background-color: rgba(251, 90, 25, 1);
+      color: rgba(255, 255, 255, 1);
+      font-size: 16px;
+      text-align: center;
+      font-family: Arial;
+    }
+    div:nth-child(2) {
+      width: 50%;
+      float: right;
+      //background-color: rgba(251, 90, 25, 1);
+      color: green;
+      font-size: 16px;
+      text-align: center;
+      font-family: Arial;
+    }
   }
 }

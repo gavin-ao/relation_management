@@ -6,8 +6,10 @@
     <div class="containers">
       <div class="nickname">
         <img :src="avatarUrl" alt="" style="">
+        <!--<img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIbWFEIJj8IpGeHM7dGic1aTFZALjWcMm9ltWfFiaQfVRYticWBfgGfzXWMt2EkJWiaicPtftHAlWxUibxQ/132" alt="" style="">-->
       </div>
       <img class="conImg" :src="getGoLink" alt="">
+      <!--<img class="conImg" src="https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg" alt="">-->
       <div class="qrcodes" style="">
         <img class="codeImg" :src="qrcodeUrl" alt=""
              style="">
@@ -190,7 +192,7 @@
       var that = this;
       this.checked = false
       wx.setNavigationBarTitle({
-        title: that.$store.state.board.actTitle
+        title: '分享'
       })
       wx.showShareMenu({
         withShareTicket: true

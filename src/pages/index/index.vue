@@ -46,7 +46,7 @@
 <script>
 export default {
   onLoad() {
-
+    wx.hideLoading()
   },
   onShow() {
 

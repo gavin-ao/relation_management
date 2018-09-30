@@ -2,7 +2,7 @@
   //overflow-x: hidden;
   .seladdress {
     width: calc(100% - 20px);
-    min-height: 80px;
+    height: 80px;
     //background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/address-bg-bd30f2bfeb.png') 0 0 repeat-x #fff;
     //background-size: 62rpx 10rpx;
     margin-bottom: 10px;
@@ -124,6 +124,9 @@
   .selaInfos{
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0px 0px 0px 0px rgba(187, 187, 187, 1);
+    border: 1px solid rgba(229, 229, 229, 1);
     .buyGoods{
       width: 100%;
       .buyGoodsInfo{
@@ -226,7 +229,117 @@
       }
     }
   }
+  .selaGifts{
+    width: 100%;
+    margin-top: 18px;
+    .buyGoods{
+      width: 100%;
+      .giftInfos{
+        width: calc(100% - 20px);
+        padding: 0 10px;
+        height: 20px;
+        color: rgba(111, 111, 111, 1);
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 10px;
+        font-family: PingFangSC-regular;
+        .left{
+          float: left;
+        }
+        .right{
+          float: right;
+        }
+      }
+      .buyGoodsInfo{
+        width: calc(100% - 20px);
+        height: 110px;
+        padding: 5px 10px;
+        line-height: 20px;
+        background-color: rgba(248, 248, 248, 1);
+        color: rgba(16, 16, 16, 1);
+        font-size: 14px;
+        font-family: Arial;
+        border: 1px solid rgba(255, 255, 255, 0);
+        img{
+          display: inline-block;
+          width: 110px;
+          height: 110px;
+          float: left;
+        }
+        div{
+          display: inline-block;
+          float: right;
+          width: calc(100% - 130px);
+          height: 110px;
+          p{
+            display: inline-block;
+          }
+          p:nth-child(1){
+            height: 80px;
+            color: rgba(16, 16, 16, 1);
+            font-size: 12px;
+            text-align: left;
+            font-family: PingFangSC-regular;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          p:nth-child(2){
+            width: 100%;
+            line-height: 23px;
+            color: rgba(237, 23, 9, 1);
+            font-family: Arial;
+            span.realPrice{
+              font-size: 16px;
+              color: rgba(237, 23, 9, 1);
+            }
+            span.virtualPrice{
+              display: inline-block;
+              margin-left: 10px;
+              font-size: 12px;
+              color: rgba(102, 100, 102, 1);
+              text-decoration:line-through;
+            }
+            span.monthlySales{
+              display: inline-block;
+              float: right;
+              color: rgba(111, 111, 111, 1);
+              font-size: 14px;
+              font-family: PingFangSC-regular;
 
+            }
+          }
+
+        }
+      }
+      .buyGoodsNum{
+        margin: 16px 12px;
+        width: calc(100% - 24px);
+        height: 20px;
+        .buyGoodsNumText{
+          float: left;
+          height: 100%;
+          color: rgba(111, 111, 111, 1);
+          font-size: 14px;
+          text-align: left;
+          font-family: PingFangSC-regular;
+        }
+        .buyGoodsChangeNum{
+          float: right;
+          color: rgba(111, 111, 111, 1);
+          font-size: 14px;
+          text-align: right;
+          font-family: PingFangSC-regular;
+          span{
+            display: inline-block;
+            height: 20px;
+            font-size: 14px;
+            font-family: Arial;
+            color: rgba(237, 23, 9, 1);
+          }
+        }
+      }
+    }
+  }
   .orderbox {
     padding: 0 30rpx;
     background: #ffffff;

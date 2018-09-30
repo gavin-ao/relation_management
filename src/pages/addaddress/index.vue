@@ -1,14 +1,17 @@
 <template>
   <div class="addaddress">
     <div class="item">
-      <input type="text" placeholder="姓名" v-model="userName">
+      <span>收货人</span>
+      <input type="text" placeholder="请输入收货人姓名" v-model="userName"  placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
     </div>
     <div class="item">
-      <input type="text" placeholder="手机号码" v-model="telNumber">
+      <span>手机号码</span>
+      <input type="text" placeholder="请输入手机号码" v-model="telNumber" placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
     </div>
     <div class="item">
+      <span>省市地区</span>
       <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
-        <input type="text" placeholder="身份、城市、区县" v-model="address">
+        <input type="text" placeholder="点击选择" v-model="address" placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
       </picker>
       <!-- <input type="text" placeholder="身份、城市、区县" v-model="address"> -->
     </div>
@@ -20,20 +23,29 @@
         </view>
       </picker>
     </view> -->
-    <div class="item">
-      <input type="text" placeholder="详细地址，如楼道、楼盘号等" v-model="detailadress">
+    <div class="item detailadress">
+      <span>详细地址</span>
+      <textarea type="text" placeholder="请输入详细地址（5-120个字）" class="detailadress" v-model="detailadress"  placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
+      </textarea>
     </div>
     <div class="item itemend">
-      <checkbox-group @change="checkboxChange">
-        <label class="checkbox">
-          <checkbox class="box" value="true" :checked="checked" color="#B4282D" />设置为默认地址
-        </label>
-      </checkbox-group>
-      <div @click="wxaddress">一键导入微信></div>
+      <div>
+        <span>设置为默认地址</span>
+        <switch @change="checkboxChange"/>
+      </div>
+      <!--<checkbox-group @change="checkboxChange">-->
+        <!--<label class="checkbox">-->
+          <!--<checkbox class="box" value="true" :checked="checked" color="#B4282D" />设置为默认地址-->
+        <!--</label>-->
+      <!--</checkbox-group>-->
     </div>
-    <div @click="saveAddress" class="bottom">
-      保存
+    <div  class="bottom">
+      <div @click="saveAddress">
+        保存
+      </div>
+      <div @click="wxaddress">一键导入微信地址</div>
     </div>
+
   </div>
 </template>
 
@@ -49,7 +61,10 @@
     },
     created() {},
     mounted() {
-      this.openId = getStorageOpenid();
+      wx.setNavigationBarTitle({
+        title: "新增地址"
+      })
+      // this.openId = getStorageOpenid();
       if (this.$root.$mp.query.res) {
         this.res = JSON.parse(decodeURIComponent(this.$root.$mp.query.res));
         console.log(this.res);
@@ -59,6 +74,7 @@
         this.detailadress = this.res.detailInfo;
       }
       if (this.$root.$mp.query.id) {
+        console.log(this.$root.$mp.query.id)
         this.id = this.$root.$mp.query.id;
         this.getDetail();
       }
@@ -105,6 +121,7 @@
         this.checked = detail.is_default == 1 ? true : false;
       },
       checkboxChange(e) {
+        console.log(e)
         this.checked = e.mp.detail.value[0];
       },
       async saveAddress() {

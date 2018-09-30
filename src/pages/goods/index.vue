@@ -115,8 +115,10 @@
     <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
     <div class="bottom-fixed">
       <div class="customerService" @click="collect">
-        <div class="collect" :class="[collectFlag ? 'active' :'']">
+        <div>
+          <img class="collect" alt="" src="/static/images/kefu.png">
         </div>
+        <div><span>客服</span></div>
       </div>
       <div class="shareFriend" @click="shareFriend">
         分享给好友

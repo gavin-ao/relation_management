@@ -1,6 +1,6 @@
 <template>
   <div class="order">
-    <div v-if="address.name" class="address">
+    <div v-if="address.name&&address.address" class="address">
       <div class="customerService" >
         <div class="collect">
         </div>
@@ -51,6 +51,35 @@
               <span>{{buyGoodsNum}}</span>
               <span @click="addGoodsNum">+</span>
             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="selaGifts">
+      <div class="buyGoods">
+        <div class="giftInfos">
+          <div class="left">满额赠红酒</div>
+          <div class="right">已无其他赠品可选</div>
+        </div>
+        <div class="buyGoodsInfo">
+          <img :src="info.list_pic_url" alt="">
+          <div>
+            <p>{{info.name}}</p>
+            <p><span class="realPrice">￥0.00</span><span class="virtualPrice">￥{{info.retail_price}}</span><span
+              class="monthlySales">×{{buyGoodsNum}}</span></p>
+          </div>
+        </div>
+        <div class="buyGoodsNum">
+            <div class="buyGoodsNumText">店铺优惠</div>
+            <div class="buyGoodsChangeNum">
+              省 <span>100</span> 元：店铺优惠券1399-100
+            </div>
+        </div>
+        <div class="buyGoodsNum">
+          <div class="buyGoodsNumText">邀请折扣</div>
+          <div class="buyGoodsChangeNum">
+            省 <span>94.95</span> 元：好友邀请折扣5%
           </div>
         </div>
 
@@ -156,13 +185,31 @@
         this.totalPrices = 0;
       },
       pay() {
-        wx.showToast({
-          title: "支付功能暂未开发", //提示的内容,
-          icon: "none", //图标,
-          duration: 1500, //延迟时间,
-          mask: false, //显示透明蒙层，防止触摸穿透,
-          success: res => {}
-        });
+        if(this.address.name&&this.address.address){
+          wx.showToast({
+            title: "支付功能暂未开发", //提示的内容,
+            icon: "none", //图标,
+            duration: 1500, //延迟时间,
+            mask: false, //显示透明蒙层，防止触摸穿透,
+            success: res => {}
+          });
+        }else{
+          wx.showModal({
+            title: "地址无效", //提示的内容,
+            content:'您尚未添加收货地址，请先设置收货地址再提交订单',
+            confirmText:'去设置',
+            success:function (res) {
+              console.log(res)
+              wx.navigateTo({
+                url: "/pages/addaddress/main"
+              });
+            }
+          })
+        }
+      },
+      checkNullObj (obj) {
+        console.log(Object.keys(obj).length )
+        return Object.keys(obj).length === 0
       },
       toAddressList() {
         wx.navigateTo({
@@ -204,7 +251,6 @@
               that.allprice = res.data.allPrise;
               that.listData = res.data.goodsList;
               that.address = res.data.address;
-              // that.address = [];
             } else {
               wx.showToast({
                 title: res.data.msg,
