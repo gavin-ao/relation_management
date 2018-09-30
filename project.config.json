@@ -43,7 +43,7 @@
 				{
 					"id": 0,
 					"name": "jingqu",
-					"pathName": "pages/authorize/main",
+					"pathName": "pages/index/main",
 					"query": ""
 				}
 			]
