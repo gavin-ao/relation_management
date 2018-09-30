@@ -13,16 +13,7 @@
       <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
         <input type="text" placeholder="点击选择" v-model="address" placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
       </picker>
-      <!-- <input type="text" placeholder="身份、城市、区县" v-model="address"> -->
     </div>
-    <!-- <view class="section">
-      <view class="section__title">省市区选择器</view>
-      <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
-        <view class="picker">
-          当前选择：{{region[0]}}，{{region[1]}}，{{region[2]}}
-        </view>
-      </picker>
-    </view> -->
     <div class="item detailadress">
       <span>详细地址</span>
       <textarea type="text" placeholder="请输入详细地址（5-120个字）" class="detailadress" v-model="detailadress"  placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">

@@ -10,11 +10,6 @@
       </swiper>
       <!--<button class="share" hover-class="none" open-type="share" value="">分享商品</button>-->
     </div>
-    <!--<div class="swiper-b">-->
-    <!--<div class="item">30天无忧退货</div>-->
-    <!--<div class="item">48小时快速退款</div>-->
-    <!--<div class="item">满88元免邮费</div>-->
-    <!--</div>-->
     <div class="goods-info">
       <div class="c">
         <p>{{info.name}}</p>
@@ -24,14 +19,6 @@
 
       </div>
     </div>
-    <!--<div @click="showType" class="section-nav">-->
-    <!--<div>请选择规格数量</div>-->
-    <!--<div></div>-->
-    <!--</div>-->
-    <!-- <div @click="showType" class="section-nav">
-      <div>用户评价</div>
-      <div></div>
-    </div> -->
     <div class="productDetail">
       <div class="productTopNav">
         <div class="productNav" @click="detailContent('0')">
@@ -75,43 +62,6 @@
         </div>
       </div>
     </div>
-    <!--&lt;!&ndash; 常见问题 &ndash;&gt;-->
-    <!--<div class="common-problem">-->
-    <!--<div class="h">-->
-    <!--<div class="line"></div>-->
-    <!--<text class="title">常见问题</text>-->
-    <!--<div class="line"></div>-->
-    <!--</div>-->
-    <!--<div class="b">-->
-    <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
-    <!--<div class="question-box">-->
-    <!--<text class="spot"></text>-->
-    <!--<text class="question">{{item.question}}</text>-->
-    <!--</div>-->
-    <!--<div class="answer">-->
-    <!--{{item.answer}}-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash; 常见问题 &ndash;&gt;-->
-    <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
-
-    <!--<div class="common-problem">-->
-    <!--<div class="h">-->
-    <!--<div class="line"></div>-->
-    <!--<text class="title">大家都在看</text>-->
-    <!--<div class="line"></div>-->
-    <!--</div>-->
-    <!--<div class="sublist">-->
-    <!--<div @click="togoodsDetail(subitem.id)" v-for="(subitem, subindex) in productList" :key="subindex">-->
-    <!--<img :src="subitem.list_pic_url" alt="">-->
-    <!--<p>{{subitem.name}}</p>-->
-    <!--<p>￥{{subitem.retail_price}}</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
     <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
     <div class="bottom-fixed">
       <div class="customerService" @click="collect">
