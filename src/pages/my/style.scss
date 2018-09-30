@@ -1,0 +1,107 @@
+.my {
+  .myinfo {
+    width: 375px;
+    height: 185px;
+    line-height: 20px;
+    background-color: rgba(136, 99, 37, 1);
+    color: rgba(16, 16, 16, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Arial;
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      margin-top: 46px;
+    }
+    div:nth-child(2) {
+      margin-top: 8px;
+      p {
+        color: #fff;
+        font-size: 15px;
+        margin-bottom: 5px
+      }
+      p:nth-child(2) {
+        font-size: 14px;
+      }
+    }
+    div:nth-child(3) {
+      margin-top: 8px;
+      p{
+        width: 100px;
+        height: 30px;
+        margin: 0 auto;
+        line-height: 30px;
+        border-radius: 15px;
+        font-size: 14px;
+        text-align: center;
+        font-family: Arial;
+        background-color: #FFF;
+        color: #BB8D5E;
+        img{
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          margin-top: 0px;
+          position: relative;
+          top:5px;
+        }
+      }
+    }
+  }
+  .gainARebate{
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+    p{
+      color: rgba(187, 187, 187, 1);
+      font-size: 14px;
+      text-align: left;
+      font-family: PingFangSC-regular;
+      margin: 0 20px;
+      word-wrap: break-word;
+      word-break: break-all;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      span{
+        color: rgba(187, 141, 94, 1);
+        font-size: 18px;
+        text-align: left;
+        display: inline-block;
+        padding: 0px 5px;
+      }
+    }
+  }
+
+  .iconlist {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    flex-wrap: wrap;
+    div {
+      width: 33.33%;
+      padding: 50rpx 0;
+      text-align: center;
+      border-right: 1rpx solid rgba(0, 0, 0, .15);
+      border-bottom: 1rpx solid rgba(0, 0, 0, .15);
+      box-sizing: border-box;
+      span {
+        display: block;
+      }
+      span:nth-child(1) {
+        margin-bottom: 10rpx;
+      }
+    }
+    div:nth-child(3n+3) {
+      border-right: none;
+    }
+    div:nth-last-child(1) {
+      border-bottom: none;
+    }
+    div:nth-last-child(2) {
+      border-bottom: none;
+    }
+  }
+}

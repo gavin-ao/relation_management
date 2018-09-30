@@ -1,0 +1,99 @@
+.orderCompletion {
+  height: 100%;
+  background: #fff;
+  color: rgba(16, 16, 16, 1);
+  font-size: 14px;
+  text-align: left;
+  font-family: PingFangSC-regular;
+  .titleText {
+    padding: 25px;
+    p {
+      //color: rgba(16, 16, 16, 1);
+      //font-size: 14px;
+      //text-align: left;
+      //font-family: PingFangSC-regular;
+      line-height: 20px;
+    }
+  }
+  .middleText {
+    margin: 20px 0px 15px 18px;
+  }
+  .buyGoods {
+    width: 100%;
+    margin-bottom: 40px;
+    .buyGoodsInfo {
+      width: calc(100% - 20px);
+      height: 110px;
+      padding: 5px 10px;
+      line-height: 20px;
+      background-color: rgba(248, 248, 248, 1);
+      color: rgba(16, 16, 16, 1);
+      font-size: 14px;
+      font-family: Arial;
+      border: 1px solid rgba(255, 255, 255, 0);
+      img {
+        display: inline-block;
+        width: 110px;
+        height: 110px;
+        float: left;
+      }
+      div {
+        display: inline-block;
+        float: right;
+        width: calc(100% - 130px);
+        height: 110px;
+        p {
+          display: inline-block;
+        }
+        p:nth-child(1) {
+          height: 80px;
+          color: rgba(16, 16, 16, 1);
+          font-size: 12px;
+          text-align: left;
+          font-family: PingFangSC-regular;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        p:nth-child(2) {
+          width: 100%;
+          line-height: 23px;
+          color: rgba(237, 23, 9, 1);
+          font-family: Arial;
+          span.realPrice {
+            font-size: 16px;
+            color: rgba(237, 23, 9, 1);
+          }
+          span.virtualPrice {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 12px;
+            color: rgba(102, 100, 102, 1);
+            text-decoration: line-through;
+          }
+          span.monthlySales {
+            display: inline-block;
+            float: right;
+            color: rgba(111, 111, 111, 1);
+            font-size: 14px;
+            font-family: PingFangSC-regular;
+
+          }
+        }
+
+      }
+    }
+  }
+  .button {
+    margin: 0 auto;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(251, 90, 25, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    font-family: Arial;
+    border: 1px solid rgba(251, 90, 25, 1);
+  }
+}
