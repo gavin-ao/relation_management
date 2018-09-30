@@ -3,9 +3,9 @@
     <!--<web-view src="https://www.hejinkai.com/51talk"></web-view>-->
     <div class="authorizes">
       <div class="logo">
-        <img src="/static/images/timg.jpg" alt="">
-        <p style="color: #000;font-size: 18px;">惠普</p>
-        <p>CTO 计算器</p>
+        <img src="/static/images/logo.png" alt="">
+        <p style="color: #000;font-size: 18px;">分销e</p>
+        <p>购物商城</p>
       </div>
       <p style="border-top:1px solid #ccc;width: 100%;margin: 60px 0 0 0;"></p>
       <div class="info">
