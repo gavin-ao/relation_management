@@ -28,7 +28,7 @@ const state = {
   secret:'cb91e07ac0071dce2d304afcc26b6b83',
   headPic:[],
   // urlHttp:'https://dataanalysis.easy7share.com'
-  urlHttp:'https://dataanalysis-cs.easy7share.com'
+  urlHttp:'https://erm.easy7share.com'
 }
 
 export default {

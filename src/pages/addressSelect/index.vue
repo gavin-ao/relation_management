@@ -5,16 +5,16 @@
       <!-- <div class="addcont"> -->
       <div v-if="listData.length!=0" class="item">
         <div class="list" v-for="(item, index) in listData" :key="index">
-          <div class="addresslist" :style="item.textStyle">
+          <div class="addresslist">
             <div>
-              <span>{{item.name}}</span>
+              <span>{{item.country}}</span>
               <div v-if="item.is_default" class="moren">
                 默认
               </div>
             </div>
             <div @click="selAddress(item.id)" class="info">
-              <p>{{item.mobile}}</p>
-              <p>{{item.address+item.address_detail}}</p>
+              <p>{{item.region}}</p>
+              <p>{{item.country + item.province +item.city+ item.region+item.detailAddr}}</p>
             </div>
             <div @click="toDetail(item.id)"></div>
 
@@ -67,18 +67,18 @@ export default {
     async getAddressList() {
       var that = this;
       wx.request({
-        url: "https://www.heyuhsuo.xyz/heyushuo/address/getListAction?openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c",
-        // url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id=1009024&openId=" + that.openId,
-        method: "get",
-        // data:{categoryId: item.id},
+        url:that.$store.state.board.urlHttp + '/wechatapi/order/addr/findAddrList',
+        method: "post",
+        // data:{sessionID:that.$store.state.board.sessionID},
+        data:{sessionID:"5bb36ce1d6b4e046aecb4783"},
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
           console.log(res)
-          if (res.statusCode == 200) {
-            for (var i = 0; i < res.data.data.length; i++) {
-              res.data.data[i].textStyle = "";
-              res.data.data[i].textStyle1 = "";
-            }
+          if (res.data.success) {
+            // for (var i = 0; i < res.data.data.length; i++) {
+            //   res.data.data[i].textStyle = "";
+            //   res.data.data[i].textStyle1 = "";
+            // }
             that.listData = res.data.data;
           } else {
             wx.showToast({

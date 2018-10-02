@@ -36,21 +36,18 @@ function login(that, flag, func) {
             success: function (res) {
               if (res.data.success) {
                 console.log(new Date().getTime())
+                wx.hideLoading();
                 that.$store.state.board.sessionID = res.data.sessionID
                 var otherHelpId = that.$store.state.board.otherHelpId;
-                var actId = that.$store.state.board.actId;
                 var sessionID = that.$store.state.board.sessionID;
+                console.log("111111")
                 if (otherHelpId) {
-                  if (flag) {
-                    func(sessionID, otherHelpId)
-                  } else {
-                    func(sessionID, actId, otherHelpId)
-                  }
+                  func(sessionID, otherHelpId)
                 } else {
-                  var actId = that.$store.state.board.actId;
                   var sessionID = that.$store.state.board.sessionID;
                   if (!flag) {
-                    func(sessionID, actId);
+                    console.log("assaaa")
+                    func(sessionID);
                   }
 
                 }

@@ -98,6 +98,7 @@
       },
       bindRegionChange(e) {
         var value = e.mp.detail.value;
+        console.log(value)
         this.address = value[0] + " " + value[1] + " " + value[2];
       },
       async getDetail() {

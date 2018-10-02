@@ -46,8 +46,10 @@
       },
       login(){
         var that = this;
-        utils.login(that,false,function () {
-
+        utils.login(that,false,function (sessionId) {
+          wx.switchTab({
+            url: '/pages/index/main'
+          })
         });
       }
 

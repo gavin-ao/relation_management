@@ -4,7 +4,7 @@
       <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
         <block v-for="(item, index) in gallery " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item.img_url" class="slide-image"/>
+            <image :src="item" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper>
@@ -12,10 +12,12 @@
     </div>
     <div class="goods-info">
       <div class="c">
-        <p>{{info.name}}</p>
+        <p>{{info.commodityName}}</p>
         <!--<p>{{info.goods_brief}}</p>-->
-        <p><span class="realPrice">￥{{info.retail_price}}</span><span class="virtualPrice">￥{{info.retail_price}}</span><span
-          class="monthlySales">月销： {{info.sell_volume}}{{info.goods_unit}}</span></p>
+        <p><span class="realPrice">￥{{info.prices}}</span><span class="virtualPrice">￥{{info.suggestPrices}}</span>
+          <!--<span class="monthlySales">月销： {{info.sell_volume}}{{info.goods_unit}}</span>-->
+          <span class="monthlySales">月销： 0</span>
+        </p>
 
       </div>
     </div>
@@ -33,33 +35,37 @@
 
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==0}">
-        <div v-if="goods_desc" class="detail">
+        <div class="detail">
           <!--<p v-html="goods_desc"></p>-->
-          <wxParse :content="goods_desc"/>
+          <!--<wxParse :content="goods_desc"/>-->
+            <block v-for="(item, index) in goods_desc " :key="index">
+                <image :src="item" class="slide-image" mode="aspectFit"/>
+            </block>
+
         </div>
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==1}">
-        <div v-if="attribute.length!=0" class="attribute">
-          <div v-for="(item,index) in attribute" :key="index" class="item">
-            <div>{{item.name}}</div>
-            <div>{{item.value}}</div>
-          </div>
-        </div>
+        <!--<div v-if="attribute.length!=0" class="attribute">-->
+          <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
+            <!--<div>{{item.name}}</div>-->
+            <!--<div>{{item.value}}</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==2}">
-        <div class="common-problem">
-          <div class="b">
-            <div class="item" v-for="(item, index) in issueList" :key="index">
-              <div class="question-box">
-                <text class="spot"></text>
-                <text class="question">{{item.question}}</text>
-              </div>
-              <div class="answer">
-                {{item.answer}}
-              </div>
-            </div>
-          </div>
-        </div>
+        <!--<div class="common-problem">-->
+          <!--<div class="b">-->
+            <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
+              <!--<div class="question-box">-->
+                <!--<text class="spot"></text>-->
+                <!--<text class="question">{{item.question}}</text>-->
+              <!--</div>-->
+              <!--<div class="answer">-->
+                <!--{{item.answer}}-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
     <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
@@ -90,7 +96,8 @@
       //   this.userInfo = login();
       // }
       this.id = this.$root.$mp.query.id;
-      this.openId = wx.getStorageSync("openId");
+      this.paths = this.$root.$mp.query.paths;
+      console.log( this.paths)
       this.goodsDetail();
       wx.setNavigationBarTitle({
         title: "商品详情页"
@@ -123,8 +130,9 @@
         attribute: [],
         issueList: [],
         productList: [],
-        goods_desc: "",
+        goods_desc: [],
         id: "",
+        paths: "",
         userInfo: "",
         goodsId: "",
         allPrise: "",
@@ -143,14 +151,14 @@
         this.collectFlag = false;
         this.number = 0;
         this.showpop = false;
-        this.gallery = [];
         this.info = {};
         this.brand = {};
         this.attribute = [];
         this.issueList = [];
         this.productList = [];
-        this.goods_desc = "";
+        this.goods_desc = [];
         this.id = "";
+        this.paths = "";
         this.goodsId = "";
         this.allPrise = "";
         this.currentNum = 0;
@@ -190,25 +198,22 @@
       async goodsDetail() {
         var that = this;
         wx.request({
-          url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id="+that.id+"&openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c",
-          // url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id=1009024&openId=" + that.openId,
-          method: "get",
-          // data:{categoryId: item.id},
+          url: that.$store.state.board.urlHttp + '/wechatapi/commodity/getCommodityById',
+          method: "post",
+          // data:{commodityId: that.id,sessionID:that.$store.state.board.sessionID},
+          data:{commodityId: 3,sessionID:that.$store.state.board.sessionID},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
             console.log(res)
-            if (res.statusCode == 200) {
-              that.gallery = res.data.gallery;
-              that.info = res.data.info;
-              that.allPrise = res.data.info.retail_price;
-              that.goodsId = res.data.info.id;
-              that.brand = res.data.brand;
-              that.attribute = res.data.attribute;
-              that.goods_desc = res.data.info.goods_desc;
-              that.issueList = res.data.issue;
-              that.collectFlag = res.data.collected;
-              that.allnumber = res.data.allnumber;
-              that.productList = res.data.productList;
+            var data = res.data;
+            if (data.success) {
+              that.gallery.push(that.paths)
+              that.goods_desc = data.commodityVO.commodityImageTextList;
+              for(var i=0;i<that.goods_desc.length;i++){
+                that.goods_desc[i] =  that.$store.state.board.urlHttp +  that.goods_desc[i]
+              }
+              console.log(that.goods_desc)
+              that.info = data.commodityVO;
             } else {
               wx.showToast({
                 title: res.data.msg,
