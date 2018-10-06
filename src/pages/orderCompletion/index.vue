@@ -53,9 +53,30 @@
     components: {},
     methods: {
       shareFriend() {
-        wx.navigateTo({
-          url: "/pages/showPages/main"
-        });
+        var _this = this;
+        wx.request({
+          url: _this.$store.state.board.urlHttp + '/wechatapi/getInvitation',
+          method: "post",
+          data: {
+            sessionID: _this.$store.state.board.sessionID
+          },
+          header: {'content-type': 'application/x-www-form-urlencoded'},
+          success: function (res) {
+            console.log(res)
+            if (res.data.success) {
+              _this.$store.state.board.myInvitation= res.data.invitation;
+              wx.navigateTo({
+                url: "/pages/showPages/main"
+              });
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          }
+        })
       },
 
     },

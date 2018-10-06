@@ -7,31 +7,39 @@
     onShow(option) {
       console.log(option)
       var that = this;
-      if(option.query.helpId){
-        that.$store.state.board.otherHelpId = option.query.helpId
-      }
-      wx.getSetting({
-        success: (res) => {
-          console.log(res);
-          if (res.authSetting['scope.userInfo']) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            wx.showLoading({
-              title: '加载中',
-            })
-            utils.login(that, false, function (sessionId) {
-              console.log(333333)
-              // wx.switchTab({
-              //   url: '/pages/index/main'
-              // })
-            })
-          }
-          else {
-            wx.redirectTo({
-              url: '/pages/authorize/main'
-            })
-          }
+      if(option.path!='pages/addaddress/main'){
+        if(option.query.helpId){
+          that.$store.state.board.otherHelpId = option.query.helpId
         }
-      })
+
+        wx.getSetting({
+          success: (res) => {
+            console.log(res);
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+              wx.showLoading({
+                title: '加载中',
+              })
+              utils.login(that, false, function (sessionId) {
+                console.log(333333)
+                wx.switchTab({
+                  url: '/pages/index/main'
+                })
+                // wx.redirectTo({
+                //   // url: '/pages/addaddress/main'
+                //   url: '/pages/addressSelect/main'
+                // })
+              })
+            }
+            else {
+              wx.redirectTo({
+                url: '/pages/authorize/main'
+              })
+            }
+          }
+        })
+      }
+
     },
     created() {
 

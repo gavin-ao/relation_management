@@ -1,24 +1,26 @@
 <template>
   <div class="myOrder">
     <div>
-      <div class="ordersNum" v-for="(item,index) in orders" :key="index">
-        <div class="titleText">
-          <p>
-            <span>{{item.time}}</span>
-            <span v-if="item.flag">已完成</span>
-            <span class="payment" v-else>去付款></span>
-          </p>
-        </div>
-        <div class="buyGoods">
-          <div class="buyGoodsInfo">
-            <img :src="item.imgUrl" alt="">
-            <div>
-              <p>{{item.text}}</p>
-              <p><span class="realPrice">￥{{item.prices}}</span><span
-                class="monthlySales">×{{item.number}}</span></p>
+      <div class="ordersNum" v-for="(items,indexs) in orders" :key="indexs">
+        <block v-for="(item,index) in items.detailList" :key="index">
+          <div class="titleText">
+            <p>
+              <span>{{items.time}}</span>
+              <span v-if="items.state">已完成</span>
+              <span class="payment" v-else>去付款></span>
+            </p>
+          </div>
+          <div class="buyGoods">
+            <div class="buyGoodsInfo">
+              <img :src="item.filePath" alt="">
+              <div>
+                <p>{{item.commodityName}}</p>
+                <p><span class="realPrice">￥{{item.unitPrice}}</span><span
+                  class="monthlySales">×{{item.amount}}</span></p>
+              </div>
             </div>
           </div>
-        </div>
+        </block>
       </div>
     </div>
 
@@ -37,39 +39,52 @@
       wx.setNavigationBarTitle({
         title: "我的订单"
       })
+      this.getDetail();
     },
-    created() {},
+    created() {
+    },
     data() {
       return {
-        orders:[
-          {
-            time:'2018-09-12 13:25',
-            imgUrl:'https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg',
-            text:'53度飞天茅台500ml酱香型+家常久 家常小酒500ml 浓香型',
-            prices:1999.00,
-            number: 1,
-            id:1,
-            flag:true
-          },
-          {
-            time:'2018-09-12 13:26',
-            imgUrl:'https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg',
-            text:'53度飞天茅台500ml酱香型+家常久 家常小酒500ml 浓香型',
-            prices:1999.00,
-            number: 2,
-            id:2,
-            flag:false
-          }
-        ]
+        orders: []
       };
     },
     components: {},
     methods: {
-
-      },
-    computed: {
-
-    }
+      getDetail() {
+        var _this = this;
+        wx.request({
+          url: _this.$store.state.board.urlHttp + '/wechatapi/order/findOrderList',
+          method: "post",
+          data: {
+            sessionID: _this.$store.state.board.sessionID
+          },
+          header: {'content-type': 'application/x-www-form-urlencoded'},
+          success: function (res) {
+            console.log(res)
+            if (res.data.success) {
+             var data =  res.data.data;
+             if(data){
+               for(var i=0;i<data.length;i++){
+                 for(var j=0;i<data[i].detailList.length;j++){
+                   data[i].detailList[j].filePath =  _this.$store.state.board.urlHttp + data[i].detailList[j].filePath;
+                 }
+               }
+             }else{
+               data = []
+             }
+              _this.orders =  data;
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          }
+        })
+      }
+    },
+    computed: {}
   };
 
 </script>

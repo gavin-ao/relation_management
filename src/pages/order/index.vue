@@ -1,7 +1,7 @@
 <template>
   <div class="order">
-    <div v-if="address.name&&address.address" class="address">
-      <div class="customerService" >
+    <div v-if="address.country&&address.city" class="address">
+      <div class="customerService">
         <div class="collect">
         </div>
       </div>
@@ -10,11 +10,11 @@
           <div class="list">
             <div class="addresslist">
               <div>
-                <span>收货人：{{address.name}}</span>
-                <span>{{address.mobile}}</span>
+                <span>收货人：{{address.alias}}</span>
+                <span>{{address.telephone}}</span>
               </div>
               <div class="info">
-                <p>收货地址：{{address.address+address.address_detail}}</p>
+                <p>收货地址：{{address.country+address.province+address.city+address.region+address.detailAddr}}</p>
               </div>
             </div>
           </div>
@@ -23,23 +23,24 @@
       <div class="purchaseImmediately" @click="toAddressList"></div>
     </div>
     <div v-else class="seladdress">
-      <div class="customerService" >
+      <div class="customerService">
         <div class="collect">
         </div>
       </div>
       <div class="shareFriend">
         请选择收货地址
       </div>
-      <div class="purchaseImmediately"  @click="toAdd" >+</div>
+      <div class="purchaseImmediately" @click="toAdd">+</div>
 
     </div>
     <div class="selaInfos">
       <div class="buyGoods">
         <div class="buyGoodsInfo">
-          <img :src="info.list_pic_url" alt="">
+          <img :src="info.filePath" alt="">
           <div>
             <p>{{info.name}}</p>
-            <p><span class="realPrice">￥{{info.retail_price}}</span><span class="virtualPrice">￥{{info.retail_price}}</span><span
+            <p><span class="realPrice">￥{{info.prices}}</span><span
+              class="virtualPrice">￥{{info.suggestPrices}}</span><span
               class="monthlySales">×{{buyGoodsNum}}</span></p>
           </div>
         </div>
@@ -56,35 +57,35 @@
 
       </div>
     </div>
-    <div class="selaGifts">
-      <div class="buyGoods">
-        <div class="giftInfos">
-          <div class="left">满额赠红酒</div>
-          <div class="right">已无其他赠品可选</div>
-        </div>
-        <div class="buyGoodsInfo">
-          <img :src="info.list_pic_url" alt="">
-          <div>
-            <p>{{info.name}}</p>
-            <p><span class="realPrice">￥0.00</span><span class="virtualPrice">￥{{info.retail_price}}</span><span
-              class="monthlySales">×{{buyGoodsNum}}</span></p>
-          </div>
-        </div>
-        <div class="buyGoodsNum">
-            <div class="buyGoodsNumText">店铺优惠</div>
-            <div class="buyGoodsChangeNum">
-              省 <span>100</span> 元：店铺优惠券1399-100
-            </div>
-        </div>
-        <div class="buyGoodsNum">
-          <div class="buyGoodsNumText">邀请折扣</div>
-          <div class="buyGoodsChangeNum">
-            省 <span>94.95</span> 元：好友邀请折扣5%
-          </div>
-        </div>
+    <!--<div class="selaGifts">-->
+    <!--<div class="buyGoods">-->
+    <!--<div class="giftInfos">-->
+    <!--<div class="left">满额赠红酒</div>-->
+    <!--<div class="right">已无其他赠品可选</div>-->
+    <!--</div>-->
+    <!--<div class="buyGoodsInfo">-->
+    <!--<img :src="info.list_pic_url" alt="">-->
+    <!--<div>-->
+    <!--<p>{{info.name}}</p>-->
+    <!--<p><span class="realPrice">￥0.00</span><span class="virtualPrice">￥{{info.retail_price}}</span><span-->
+    <!--class="monthlySales">×{{buyGoodsNum}}</span></p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="buyGoodsNum">-->
+    <!--<div class="buyGoodsNumText">店铺优惠</div>-->
+    <!--<div class="buyGoodsChangeNum">-->
+    <!--省 <span>100</span> 元：店铺优惠券1399-100-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="buyGoodsNum">-->
+    <!--<div class="buyGoodsNumText">邀请折扣</div>-->
+    <!--<div class="buyGoodsChangeNum">-->
+    <!--省 <span>94.95</span> 元：好友邀请折扣5%-->
+    <!--</div>-->
+    <!--</div>-->
 
-      </div>
-    </div>
+    <!--</div>-->
+    <!--</div>-->
     <div class="bottom">
       <div>
         合计金额 : <span>￥{{totalPrices}}</span>
@@ -104,13 +105,15 @@
   //   getStorageOpenid
   // } from "../../utils";
   export default {
-    onLoad(option){
-      if(option.goodsId){
-        this.goodsId = option.goodsId
-      }else{
-        this.goodsId = 1006013
-      }
+    onLoad(option) {
       this.initData();
+      if (option.commodityId) {
+        this.commodityId = option.commodityId
+      } else {
+        this.commodityId = ''
+      }
+      console.log(this.commodityId)
+
     },
     onShow() {
       // if (wx.getStorageSync("addressId")) {
@@ -122,49 +125,80 @@
       })
       this.getDetail();
     },
-    created() {},
-    mounted() {},
+    created() {
+    },
+    mounted() {
+    },
     data() {
       return {
-        goodsId:'',
+        commodityId: '',
         addressId: "",
         openId: "",
         allprice: "",
         listData: [],
         address: {},
-        info:{},
-        buyGoodsNum:1,
-        totalPrices:0
+        info: {},
+        buyGoodsNum: 1,
+        totalPrices: 0
       };
     },
     components: {},
     methods: {
       initData() {
-        this.goodsId = '';
+        this.commodityId = '';
         this.info = {};
         this.addressId = '';
         this.listData = [];
         this.address = {};
-        this.goodsId = "";
         this.allPrise = "";
         this.buyGoodsNum = 1;
         this.totalPrices = 0;
       },
       pay() {
-        if(this.address.name&&this.address.address){
-          wx.showToast({
-            title: "支付功能暂未开发", //提示的内容,
-            icon: "none", //图标,
-            duration: 1500, //延迟时间,
-            mask: false, //显示透明蒙层，防止触摸穿透,
-            success: res => {}
-          });
-        }else{
+        // if (this.address.name && this.address.address) {
+        if (this.address.country && this.address.city) {
+          var that = this;
+          wx.request({
+            url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
+            method: "post",
+            data: {"sessionID": that.$store.state.board.sessionID, addrId: that.address.addrId,"detailList": JSON.stringify([{"commodityId":that.commodityId,"amount":that.buyGoodsNum}])},
+            header: {'content-type': 'application/x-www-form-urlencoded'},
+            success: function (res) {
+              console.log(res)
+              if (res.data.success) {
+                // wx.request({
+                //   url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+                //   method: "post",
+                //   data: {"sessionID": that.$store.state.board.sessionID, addrId: that.address.addrId,"detailList": [{{"commodityId":that.commodityId,"amount":that.buyGoodsNum}]},
+                //   header: {'content-type': 'application/x-www-form-urlencoded'},
+                //   success: function (res) {
+                //     console.log(res)
+                //     if (res.data.success) {
+                //
+                //     } else {
+                //       wx.showToast({
+                //         title: res.data.msg,
+                //         icon: 'none',
+                //         duration: 2000
+                //       })
+                //     }
+                //   }
+                // })
+              } else {
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            }
+          })
+        } else {
           wx.showModal({
             title: "地址无效", //提示的内容,
-            content:'您尚未添加收货地址，请先设置收货地址再提交订单',
-            confirmText:'去设置',
-            success:function (res) {
+            content: '您尚未添加收货地址，请先设置收货地址再提交订单',
+            confirmText: '去设置',
+            success: function (res) {
               console.log(res)
               wx.navigateTo({
                 url: "/pages/addaddress/main"
@@ -173,8 +207,8 @@
           })
         }
       },
-      checkNullObj (obj) {
-        console.log(Object.keys(obj).length )
+      checkNullObj(obj) {
+        console.log(Object.keys(obj).length)
         return Object.keys(obj).length === 0
       },
       toAddressList() {
@@ -187,36 +221,38 @@
           url: "/pages/addaddress/main"
         });
       },
-      reduceGoodsNum(){
+      reduceGoodsNum() {
         // 购买数量 减
-        if(this.buyGoodsNum==1){
+        if (this.buyGoodsNum == 1) {
           wx.showToast({
             title: "购买数量不可以小于1哟！",
             icon: 'none',
             duration: 2000
           })
-        }else{
+        } else {
           this.buyGoodsNum--;
         }
-        this.totalPrices = (parseInt(this.info.retail_price) *  this.buyGoodsNum).toFixed(2)
+        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
       },
-      addGoodsNum(){
+      addGoodsNum() {
         // 购买数量 加
         this.buyGoodsNum++;
-        this.totalPrices = (parseInt(this.info.retail_price) *  this.buyGoodsNum).toFixed(2)
+        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
       },
       async getDetail() {
         var that = this;
+        console.log(that.commodityId)
         wx.request({
-          url: "https://www.heyuhsuo.xyz/heyushuo/order/detailAction?openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c&addressId="+ this.addressId,
-          method: "get",
+          url: that.$store.state.board.urlHttp + "/wechatapi/order/purchaseImmediately",
+          method: "post",
+          data: {"sessionID": that.$store.state.board.sessionID, "commodityId": that.commodityId},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
             console.log(res)
-            if (res.statusCode == 200) {
-              that.allprice = res.data.allPrise;
-              that.listData = res.data.goodsList;
-              that.address = res.data.address;
+            if (res.data.success) {
+              that.info = res.data.commodityVO;
+              that.address = res.data.addr;
+              that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum).toFixed(2)
             } else {
               wx.showToast({
                 title: res.data.msg,
@@ -226,26 +262,26 @@
             }
           }
         })
-        wx.request({
-          // url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id="+that.goodsId+"&openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c",
-          url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id=1009024&openId=" + that.openId,
-          method: "get",
-          // data:{categoryId: item.id},
-          header: {'content-type': 'application/x-www-form-urlencoded'},
-          success: function (res) {
-            console.log(res)
-            if (res.statusCode == 200) {
-              that.info = res.data.info;
-              that.totalPrices = (parseInt(res.data.info.retail_price)).toFixed(2);
-            } else {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none',
-                duration: 2000
-              })
-            }
-          }
-        })
+        // wx.request({
+        //   // url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id="+that.goodsId+"&openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c",
+        //   url: "https://www.heyuhsuo.xyz/heyushuo/goods/detailaction?id=1009024&openId=" + that.openId,
+        //   method: "get",
+        //   // data:{categoryId: item.id},
+        //   header: {'content-type': 'application/x-www-form-urlencoded'},
+        //   success: function (res) {
+        //     console.log(res)
+        //     if (res.statusCode == 200) {
+        //       that.info = res.data.info;
+        //       that.totalPrices = (parseInt(res.data.info.retail_price)).toFixed(2);
+        //     } else {
+        //       wx.showToast({
+        //         title: res.data.msg,
+        //         icon: 'none',
+        //         duration: 2000
+        //       })
+        //     }
+        //   }
+        // })
 
       }
     },

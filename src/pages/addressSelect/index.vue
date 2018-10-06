@@ -12,11 +12,12 @@
                 默认
               </div>
             </div>
-            <div @click="selAddress(item.id)" class="info">
+            <div @click="selAddress(item.addrId)" class="info">
               <p>{{item.region}}</p>
               <p>{{item.country + item.province +item.city+ item.region+item.detailAddr}}</p>
             </div>
-            <div @click="toDetail(item.id)"></div>
+            <div @click="toDetail(item.addrId)"></div>
+            <div @click="deleteAdrr(item.addrId)" style="color: red;">删除</div>
 
           </div>
         </div>
@@ -64,21 +65,52 @@ export default {
         url: "/pages/addaddress/main?id=" + id
       });
     },
+    deleteAdrr(id){
+      var that = this;
+      wx.request({
+        url:that.$store.state.board.urlHttp + '/wechatapi/order/addr/deleteAddr',
+        method: "post",
+        data:{sessionID:that.$store.state.board.sessionID,ids:id},
+        header: {'content-type': 'application/x-www-form-urlencoded'},
+        success: function (res) {
+          console.log(res)
+          if (res.data.success) {
+            for(var i=0;i<that.listData.length;i++){
+              if(id == that.listData[i].addrId){
+                that.listData.splice(i,1)
+              }
+            }
+            wx.showToast({
+              title: "删除成功", //提示的内容,
+              icon: "success", //图标,
+              duration: 2000, //延迟时间,
+              mask: true, //显示透明蒙层，防止触摸穿透,
+              success: res => {
+                wx.navigateBack({
+                  delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+                });
+              }
+            });
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        }
+      })
+    },
     async getAddressList() {
       var that = this;
       wx.request({
         url:that.$store.state.board.urlHttp + '/wechatapi/order/addr/findAddrList',
         method: "post",
-        // data:{sessionID:that.$store.state.board.sessionID},
-        data:{sessionID:"5bb36ce1d6b4e046aecb4783"},
+        data:{sessionID:that.$store.state.board.sessionID},
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
           console.log(res)
           if (res.data.success) {
-            // for (var i = 0; i < res.data.data.length; i++) {
-            //   res.data.data[i].textStyle = "";
-            //   res.data.data[i].textStyle1 = "";
-            // }
             that.listData = res.data.data;
           } else {
             wx.showToast({

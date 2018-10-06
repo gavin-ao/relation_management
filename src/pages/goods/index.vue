@@ -38,33 +38,33 @@
         <div class="detail">
           <!--<p v-html="goods_desc"></p>-->
           <!--<wxParse :content="goods_desc"/>-->
-            <block v-for="(item, index) in goods_desc " :key="index">
-                <image :src="item" class="slide-image" mode="aspectFit"/>
-            </block>
+          <block v-for="(item, index) in goods_desc " :key="index">
+            <image :src="item" class="slide-image" mode="aspectFit"/>
+          </block>
 
         </div>
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==1}">
         <!--<div v-if="attribute.length!=0" class="attribute">-->
-          <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
-            <!--<div>{{item.name}}</div>-->
-            <!--<div>{{item.value}}</div>-->
-          <!--</div>-->
+        <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
+        <!--<div>{{item.name}}</div>-->
+        <!--<div>{{item.value}}</div>-->
+        <!--</div>-->
         <!--</div>-->
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==2}">
         <!--<div class="common-problem">-->
-          <!--<div class="b">-->
-            <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
-              <!--<div class="question-box">-->
-                <!--<text class="spot"></text>-->
-                <!--<text class="question">{{item.question}}</text>-->
-              <!--</div>-->
-              <!--<div class="answer">-->
-                <!--{{item.answer}}-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
+        <!--<div class="b">-->
+        <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
+        <!--<div class="question-box">-->
+        <!--<text class="spot"></text>-->
+        <!--<text class="question">{{item.question}}</text>-->
+        <!--</div>-->
+        <!--<div class="answer">-->
+        <!--{{item.answer}}-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
       </div>
     </div>
@@ -97,7 +97,7 @@
       // }
       this.id = this.$root.$mp.query.id;
       this.paths = this.$root.$mp.query.paths;
-      console.log( this.paths)
+      console.log(this.id)
       this.goodsDetail();
       wx.setNavigationBarTitle({
         title: "商品详情页"
@@ -170,15 +170,27 @@
       },
       async bug() {
         var that = this;
+
+        wx.navigateTo({
+          url: "/pages/order/main?commodityId=" + that.info.commodityId
+        });
+
+      },
+      shareFriend() {
+        var _this = this;
         wx.request({
-          url: "https://www.heyuhsuo.xyz/heyushuo/order/submitAction?goodsId="+this.goodsId+"&openId=oQmbb4sNZdxaUQZ0sfYgvtOP2S7c&allPrise="+ this.allPrise,
-          method: "get",
+          url: _this.$store.state.board.urlHttp + '/wechatapi/getInvitation',
+          method: "post",
+          data: {
+            sessionID: _this.$store.state.board.sessionID
+          },
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
             console.log(res)
-            if (res.statusCode == 200) {
+            if (res.data.success) {
+              _this.$store.state.board.myInvitation= res.data.invitation;
               wx.navigateTo({
-                url: "/pages/order/main?goodsId=" + that.goodsId
+                url: "/pages/showPages/main"
               });
             } else {
               wx.showToast({
@@ -189,19 +201,15 @@
             }
           }
         })
-      },
-      shareFriend() {
-        wx.navigateTo({
-          url: "/pages/showPages/main"
-        });
+
       },
       async goodsDetail() {
         var that = this;
         wx.request({
           url: that.$store.state.board.urlHttp + '/wechatapi/commodity/getCommodityById',
           method: "post",
-          // data:{commodityId: that.id,sessionID:that.$store.state.board.sessionID},
-          data:{commodityId: 3,sessionID:that.$store.state.board.sessionID},
+          data:{commodityId: that.id,sessionID:that.$store.state.board.sessionID},
+          // data: {commodityId: 3, sessionID: that.$store.state.board.sessionID},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
             console.log(res)
@@ -209,8 +217,8 @@
             if (data.success) {
               that.gallery.push(that.paths)
               that.goods_desc = data.commodityVO.commodityImageTextList;
-              for(var i=0;i<that.goods_desc.length;i++){
-                that.goods_desc[i] =  that.$store.state.board.urlHttp +  that.goods_desc[i]
+              for (var i = 0; i < that.goods_desc.length; i++) {
+                that.goods_desc[i] = that.$store.state.board.urlHttp + that.goods_desc[i]
               }
               console.log(that.goods_desc)
               that.info = data.commodityVO;
