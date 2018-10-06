@@ -8,8 +8,10 @@
       console.log(option)
       var that = this;
       if(option.path!='pages/addaddress/main'){
-        if(option.query.helpId){
-          that.$store.state.board.otherHelpId = option.query.helpId
+        if(option.query.myInvitation){
+          that.$store.state.board.otherInvitation = option.query.myInvitation
+        }else{
+          that.$store.state.board.otherInvitation=''
         }
 
         wx.getSetting({

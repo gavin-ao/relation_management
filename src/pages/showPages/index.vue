@@ -17,14 +17,16 @@
       <img class="backText" src="/static/img/shareBack1.png" alt="">
     </div>
     <div class="menu" style="">
-      <p style="" v-html="actShareCopywriting">
+      <p class="shareText">
+        这是你的专属海报，保存图片或直接发送给好友，<br/>好友获得立减5%，您也会得到商品原价5%的返利！
+
       </p>
       <button class="shares" open-type="share">
-        {{btnText.bxt_share}}
+        分享
       </button>
 
       <button class="posters" @click="preview">
-        {{btnText.bxt_saveImg}}
+        保存图片
       </button>
     </div>
   </div>
@@ -181,9 +183,6 @@
       drawPoster() {
         return this.$store.state.board.drawPoster;
       },
-      btnText() {
-        return this.$store.state.board.btnText
-      },
       actShareCopywriting() {
         return this.$store.state.board.actShareCopywriting
       }
@@ -199,8 +198,7 @@
       })
       that.ctxHeight = that.getWindowHeight + 64
       var sessionID = that.$store.state.board.sessionID
-      var myHelpId = that.$store.state.board.myHelpId
-      var actId = that.$store.state.board.actId
+      var myInvitation = that.$store.state.board.myInvitation
       that.$store.state.board.qrcodeUrl = ''
       that.qrcodeUrl = ''
 
@@ -213,7 +211,7 @@
           appid: that.$store.state.board.appid,
           secret: that.$store.state.board.secret,
           sessionID: sessionID,
-          path: 'pages/activePower/main?actId=' + actId + "&helpId=" + myHelpId
+          path: 'pages/activePower/main?myInvitation=' + myInvitation
         },
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
@@ -328,6 +326,12 @@
       bottom: 0px;
       left: 0px;
       padding-bottom: 20px;
+      .shareText {
+        font-size: 14px;
+        text-align: center;
+        color: #4A4A4A;
+        margin-bottom: 5px;
+      }
       button {
         display: inline-block;
         margin-top: 10px;

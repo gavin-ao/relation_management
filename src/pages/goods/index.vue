@@ -76,7 +76,7 @@
         </div>
         <div><span>客服</span></div>
       </div>
-      <div class="shareFriend" @click="shareFriend">
+      <div class="shareFriend" @click="shareFriend" v-if="otherInvitation=='otherInvitation'">
         分享给好友
       </div>
       <div class="purchaseImmediately" @click="bug">立即购买</div>
@@ -179,7 +179,7 @@
       shareFriend() {
         var _this = this;
         wx.request({
-          url: _this.$store.state.board.urlHttp + '/wechatapi/getInvitation',
+          url: _this.$store.state.board.urlHttp + '/wechatapi/user/getInvitation',
           method: "post",
           data: {
             sessionID: _this.$store.state.board.sessionID
@@ -233,7 +233,13 @@
         })
       }
     },
-    computed: {}
+    computed: {
+      otherInvitation:function () {
+        if(!this.$store.state.board.otherInvitation){
+          return "otherInvitation"
+        }
+      }
+    }
   };
 </script>
 <style lang='scss' scoped>

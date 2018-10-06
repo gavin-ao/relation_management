@@ -38,7 +38,7 @@
         <div class="buyGoodsInfo">
           <img :src="info.filePath" alt="">
           <div>
-            <p>{{info.name}}</p>
+            <p>{{info.commodityName}}</p>
             <p><span class="realPrice">￥{{info.prices}}</span><span
               class="virtualPrice">￥{{info.suggestPrices}}</span><span
               class="monthlySales">×{{buyGoodsNum}}</span></p>
@@ -158,32 +158,35 @@
         // if (this.address.name && this.address.address) {
         if (this.address.country && this.address.city) {
           var that = this;
+          var  orderJson = JSON.stringify({ addrId: that.address.addrId,"detailList": [{"commodityId":that.commodityId,"amount":that.buyGoodsNum}]})
           wx.request({
             url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
             method: "post",
-            data: {"sessionID": that.$store.state.board.sessionID, addrId: that.address.addrId,"detailList": JSON.stringify([{"commodityId":that.commodityId,"amount":that.buyGoodsNum}])},
+            data: {"sessionID": that.$store.state.board.sessionID,orderJson:orderJson},
             header: {'content-type': 'application/x-www-form-urlencoded'},
             success: function (res) {
               console.log(res)
               if (res.data.success) {
-                // wx.request({
-                //   url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
-                //   method: "post",
-                //   data: {"sessionID": that.$store.state.board.sessionID, addrId: that.address.addrId,"detailList": [{{"commodityId":that.commodityId,"amount":that.buyGoodsNum}]},
-                //   header: {'content-type': 'application/x-www-form-urlencoded'},
-                //   success: function (res) {
-                //     console.log(res)
-                //     if (res.data.success) {
-                //
-                //     } else {
-                //       wx.showToast({
-                //         title: res.data.msg,
-                //         icon: 'none',
-                //         duration: 2000
-                //       })
-                //     }
-                //   }
-                // })
+                wx.request({
+                  url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+                  method: "post",
+                  data: {"sessionID": that.$store.state.board.sessionID, orderId: "5bb8aa50d6b4e05c77104b36",},
+                  header: {'content-type': 'application/x-www-form-urlencoded'},
+                  success: function (res) {
+                    console.log(res)
+                    if (res.data.success) {
+                      wx.redirectTo({
+                        url:'/pages/orderCompletion/main'
+                      })
+                    } else {
+                      wx.showToast({
+                        title: res.data.msg,
+                        icon: 'none',
+                        duration: 2000
+                      })
+                    }
+                  }
+                })
               } else {
                 wx.showToast({
                   title: res.data.msg,
@@ -251,6 +254,7 @@
             console.log(res)
             if (res.data.success) {
               that.info = res.data.commodityVO;
+              that.info.filePath = that.$store.state.board.urlHttp +"/"+ that.info.filePath
               that.address = res.data.addr;
               that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum).toFixed(2)
             } else {

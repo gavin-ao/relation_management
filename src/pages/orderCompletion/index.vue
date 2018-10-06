@@ -55,7 +55,7 @@
       shareFriend() {
         var _this = this;
         wx.request({
-          url: _this.$store.state.board.urlHttp + '/wechatapi/getInvitation',
+          url: _this.$store.state.board.urlHttp + '/wechatapi/user/getInvitation',
           method: "post",
           data: {
             sessionID: _this.$store.state.board.sessionID

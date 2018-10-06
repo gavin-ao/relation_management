@@ -59,7 +59,7 @@
       getDetail() {
         var _this = this;
         wx.request({
-          url: _this.$store.state.board.urlHttp + '/wechatapi/getInviterNumAndRebateMoney',
+          url: _this.$store.state.board.urlHttp + '/wechatapi/user/getInviterNumAndRebateMoney',
           method: "post",
           data: {
             sessionID: _this.$store.state.board.sessionID
