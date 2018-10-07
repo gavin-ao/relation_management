@@ -6,7 +6,7 @@
           <div class="titleText">
             <p>
               <span>{{items.time}}</span>
-              <span v-if="items.state">已完成</span>
+              <span v-if="items.state==0">已完成</span>
               <span class="payment" v-else>去付款></span>
             </p>
           </div>
@@ -39,6 +39,9 @@
       wx.setNavigationBarTitle({
         title: "我的订单"
       })
+      Date.prototype.toLocaleString = function () {
+        return this.getFullYear() + "-" + (this.getMonth() + 1)>9?(this.getMonth() + 1):'0'+(this.getMonth() + 1) + "-" + this.getDate()>9?this.getDate():"0"+this.getDate() + " " + this.getHours()>9?this.getHours():"0"+this.getHours() + ":" + this.getMinutes()>9?this.getMinutes():"0"+this.getMinutes();
+      };
       this.getDetail();
     },
     created() {
@@ -62,17 +65,19 @@
           success: function (res) {
             console.log(res)
             if (res.data.success) {
-             var data =  res.data.data;
-             if(data){
-               for(var i=0;i<data.length;i++){
-                 for(var j=0;i<data[i].detailList.length;j++){
-                   data[i].detailList[j].filePath =  _this.$store.state.board.urlHttp + data[i].detailList[j].filePath;
-                 }
-               }
-             }else{
-               data = []
-             }
-              _this.orders =  data;
+              var data = res.data.data;
+              if (data) {
+                for (var i = 0; i < data.length; i++) {
+                  data[i].time = new Date(data[i].createAt).toLocaleString();
+                  for (var j = 0; j < data[i].detailList.length; j++) {
+                    data[i].detailList[j].filePath = _this.$store.state.board.urlHttp + "/" + data[i].detailList[j].filePath;
+                  }
+                }
+              } else {
+                data = []
+              }
+              _this.orders = data;
+              console.log(_this.data)
             } else {
               wx.showToast({
                 title: res.data.msg,
@@ -82,6 +87,16 @@
             }
           }
         })
+      },
+      timestampToTime(timestamp) {
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y + M + D + h + m + s;
       }
     },
     computed: {}

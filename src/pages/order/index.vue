@@ -170,7 +170,7 @@
                 wx.request({
                   url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
                   method: "post",
-                  data: {"sessionID": that.$store.state.board.sessionID, orderId: "5bb8aa50d6b4e05c77104b36",},
+                  data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
                   header: {'content-type': 'application/x-www-form-urlencoded'},
                   success: function (res) {
                     console.log(res)
