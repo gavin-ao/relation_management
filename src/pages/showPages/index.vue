@@ -1,20 +1,28 @@
 <template>
   <div class="vist-userInfo">
     <div style="width: 100%;height: 1300px;margin-top: -1300px;">
+    <!--<div style="width: 100%;height: 1300px;">-->
       <canvas canvas-id="shareCanvas" style="width: 100%;" :style="{height:ctxHeight+'px'}"></canvas>
     </div>
     <div class="containers">
       <div class="nickname">
-        <img :src="avatarUrl" alt="" style="">
+        <img :src="avatarUrl" alt="" style="display: inline-block">
+        <span class="names">{{nickName}}</span>
         <!--<img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIbWFEIJj8IpGeHM7dGic1aTFZALjWcMm9ltWfFiaQfVRYticWBfgGfzXWMt2EkJWiaicPtftHAlWxUibxQ/132" alt="" style="">-->
       </div>
-      <img class="conImg" :src="getGoLink" alt="">
+      <img class="conImg" :src="goToLink" alt="">
       <!--<img class="conImg" src="https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg" alt="">-->
-      <div class="qrcodes" style="">
-        <img class="codeImg" :src="qrcodeUrl" alt=""
-             style="">
+
+      <!--<img class="backText" src="/static/img/shareBack1.png" alt="">-->
+      <div class="shareTexts">
+        <p>
+          找我买茅台，全单95折！折上折！
+        </p>
+
       </div>
-      <img class="backText" src="/static/img/shareBack1.png" alt="">
+      <div class="qrcodes" style="">
+        <img class="codeImg" :src="qrcodeUrl" alt="" style="">
+      </div>
     </div>
     <div class="menu" style="">
       <p class="shareText">
@@ -55,18 +63,18 @@
         console.log(res.target)
       }
 
-      var actId = that.$store.state.board.actId
-      var helpId = that.$store.state.board.myHelpId
+      var myInvitation = that.$store.state.board.myInvitation
       var path = "/pages/activePower/main";
 
-      if (actId && helpId) {
-        path = path + "?actId=" + actId + "&helpId=" + helpId
+      if ( myInvitation) {
+        path = path + "myInvitation=" + myInvitation
       } else {
 
       }
       console.log(path)
       return {
-        title: that.$store.state.board.actShareTitle,
+        // title: that.$store.state.board.actShareTitle,
+        title: "分享",
         path: path,
         success: function () {
 
@@ -80,42 +88,58 @@
           title: '绘制中...',
         })
         let that = this;
-        const ctx = wx.createCanvasContext('shareCanvas')
-        ctx.setFillStyle('#fff')
+        const ctx = wx.createCanvasContext('shareCanvas');
+        ctx.setFillStyle('#fff');
         ctx.fillRect(0, 0, this.getWindowWidth, that.ctxHeight);
-        ctx.draw(true)
-        var heights = that.ctxHeight - 70
-        ctx.drawImage(that.drawPoster, 13, 33, (that.getWindowWidth - 26), heights - 60)
-        ctx.draw(true)
-        ctx.drawImage('/static/img/shareBack1.png', 13, 33, (that.getWindowWidth - 26), heights)
-        ctx.draw(true)
+        ctx.draw(true);
+        ctx.beginPath()
+        ctx.setStrokeStyle('rgba(187, 141, 94, 1)')
+        ctx.strokeRect(13, 5, (this.getWindowWidth-26), (that.ctxHeight-20));
+        ctx.draw(true);
+        var heights = that.ctxHeight - 20;
+        ctx.drawImage(that.drawPoster, 13, 63, (that.getWindowWidth - 26), heights - 200);
+        ctx.draw(true);
+        // ctx.drawImage('/static/img/shareBack1.png', 13, 53, (that.getWindowWidth - 26), heights-20);
+        // ctx.draw(true);
+        ctx.setFontSize(22);
+        ctx.setFillStyle('rgba(251, 90, 25, 1)');
+        ctx.fillText('找我买茅台，全单', 20, heights - 80);
+        ctx.fillText('95折！折上折！', 25, heights - 45);
+        ctx.draw(true);
         if (that.drawAvatarUrl) {
-          ctx.save()
-          ctx.beginPath()
-          ctx.arc(48, 65, 20, 0, Math.PI * 2, false);
-          ctx.clip()
-          ctx.drawImage(that.drawAvatarUrl, 28, 45, 40, 40)
-          ctx.restore()
-          ctx.draw(true)
-
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(48, 35, 20, 0, Math.PI * 2, false);
+          ctx.clip();
+          ctx.drawImage(that.drawAvatarUrl, 28, 15, 40, 40);
+          ctx.restore();
+          ctx.draw(true);
         }
+        ctx.setFontSize(16);
+        ctx.setFillStyle('red');
+        ctx.fillText(that.nickName, 75, 40);
+        ctx.draw(true);
 
-        var qrcodeUrl = that.$store.state.board.qrcodeUrl
+        var qrcodeUrl = that.$store.state.board.qrcodeUrl;
         //画二维码
-        console.log('444444   ' + qrcodeUrl)
+        console.log('444444   ' + qrcodeUrl);
         wx.getImageInfo({
           src: qrcodeUrl,
           success: (res) => {
-            ctx.save()
-            ctx.beginPath()
-            ctx.arc((that.getWindowWidth - 76), heights - 30, 50, 0, Math.PI * 2, false);
-            ctx.setFillStyle('rgba(255, 255, 255, 0.7)')
-            ctx.fill()
-            ctx.clip()
-            ctx.drawImage(res.path, (that.getWindowWidth - 126), heights - 80, 100, 100)
-            ctx.restore()
-            ctx.draw(true)
-            wx.hideLoading()
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc((that.getWindowWidth - 76), heights - 75, 50, 0, Math.PI * 2, false);
+            ctx.setFillStyle('rgba(255, 255, 255, 0.7)');
+            ctx.fill();
+            ctx.clip();
+            ctx.drawImage(res.path, (that.getWindowWidth - 126), heights - 125, 100, 100);
+            ctx.restore();
+            ctx.draw(true);
+            ctx.setFontSize(10);
+            ctx.setFillStyle('rgba(87, 87, 87, 1)');
+            ctx.fillText('长按识别小程序码', (that.getWindowWidth - 116),  heights-10);
+            ctx.draw(true);
+            wx.hideLoading();
           }
         })
 
@@ -183,8 +207,8 @@
       drawPoster() {
         return this.$store.state.board.drawPoster;
       },
-      actShareCopywriting() {
-        return this.$store.state.board.actShareCopywriting
+      goToLink() {
+        return this.$store.state.board.goToLink;
       }
     },
     mounted() {
@@ -227,13 +251,16 @@
 </script>
 
 <style lang="scss" scoped>
+  page{
+    height: 100%!important;
+  }
   .vist-userInfo {
     font-size: 22px;
     width: 100%;
     height: 100%;
     .containers {
       /*border: 1px solid #CAA363;*/
-      width: calc(100% - 75px);
+      width: calc(100% - 26px);
       /*padding: 5px;*/
       height: 79%;
       margin: 0 auto;
@@ -249,9 +276,9 @@
           border-radius: 20px;
           float: left;
           /*border: 1px solid #CAA363;*/
-          position: absolute;
-          top: 12px;
-          left: 15px;
+          /*position: absolute;*/
+          /*top: 12px;*/
+          /*left: 15px;*/
           z-index: 200;
         }
         span {
@@ -265,58 +292,66 @@
           margin-left: 5px;
           vertical-align: middle;
         }
-        .titles {
-          font-size: 12px;
-          float: right;
-          margin-top: 24px;
+      }
+      .conImg {
+        width: 100%;
+        /*margin-top: 5px;*/
+        height: calc(100% - 130px);
+        border-radius: 8px;
+        position: relative;
+        z-index: 100;
+      }
+
+      .qrcodes {
+        position: relative;
+        height: 50px;
+        z-index: 400;
+        .helpText {
+          position: absolute;
+          left: 3px;
+          top: 10px;
+          font-size: 20px;
+          color: #CAA363;
+        }
+        .codeImg {
+          width: 84px;
+          height: 84px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, .7);
+          position: absolute;
+          right: 13px;
+          top: -2.5px;
+        }
+        .codeText {
+          position: absolute;
+          right: 0px;
+          top: 35px;
+          font-size: 10px;
+          color: #575757;
+        }
+      }
+      .backText {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 100
+      }
+      .shareTexts{
+        float: left;
+        height: 150px;
+        width: 240px;
+        p{
+          line-height: 41px;
+          color: rgba(251, 90, 25, 1);
+          font-size: 28px;
+          text-align: center;
+          font-family: Arial;
         }
       }
     }
-    .conImg {
-      width: 100%;
-      /*margin-top: 5px;*/
-      height: calc(100% - 5px);
-      border-radius: 8px;
-      position: relative;
-      z-index: 100;
-    }
 
-    .qrcodes {
-      position: relative;
-      height: 50px;
-      z-index: 400;
-      .helpText {
-        position: absolute;
-        left: 3px;
-        top: 10px;
-        font-size: 20px;
-        color: #CAA363;
-      }
-      .codeImg {
-        width: 84px;
-        height: 84px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, .7);
-        position: absolute;
-        right: 13px;
-        top: -100px;
-      }
-      .codeText {
-        position: absolute;
-        right: 0px;
-        top: 35px;
-        font-size: 10px;
-        color: #575757;
-      }
-    }
-    .backText {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      z-index: 100
-    }
     .menu {
       width: 100%;
       height: 14%;

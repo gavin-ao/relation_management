@@ -7,13 +7,13 @@
         <div class="list" v-for="(item, index) in listData" :key="index">
           <div class="addresslist">
             <div>
-              <span>{{item.country}}</span>
-              <div v-if="item.is_default" class="moren">
+              <span>{{item.addressee}}</span>
+              <div v-if="item.defaultAddr" class="moren">
                 默认
               </div>
             </div>
             <div @click="selAddress(item.addrId)" class="info">
-              <p>{{item.region}}</p>
+              <p>{{item.phoneNumber}}</p>
               <p>{{item.country + item.province +item.city+ item.region+item.detailAddr}}</p>
             </div>
             <div @click="toDetail(item.addrId)"></div>
@@ -41,6 +41,9 @@
 export default {
   onShow() {
     // this.openId = getStorageOpenid();
+    wx.setNavigationBarTitle({
+      title: "选择地址"
+    })
     this.getAddressList();
   },
   created() {},
@@ -54,7 +57,7 @@ export default {
   methods: {
     selAddress(id) {
       wx.setStorageSync("addressId", id);
-      // wx.redirectTo({ url: "/pages/order/main?id=" + id });
+      // wx.redirectTo({ url: "/pages/order/main?addressId=" + id });
       wx.navigateBack({
         delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
       });
@@ -86,9 +89,9 @@ export default {
               duration: 2000, //延迟时间,
               mask: true, //显示透明蒙层，防止触摸穿透,
               success: res => {
-                wx.navigateBack({
-                  delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
-                });
+                // wx.navigateBack({
+                //   delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+                // });
               }
             });
           } else {

@@ -14,6 +14,8 @@ const state = {
   sessionID:'',
   drawAvatarUrl:'',
   drawPoster:'',
+  productInfos:{},
+  goToLink:'',
   appid:'wxef5d2c8115a34065',
   secret:'cb91e07ac0071dce2d304afcc26b6b83',
   headPic:[],

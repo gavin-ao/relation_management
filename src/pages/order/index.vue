@@ -1,6 +1,6 @@
 <template>
   <div class="order">
-    <div v-if="address.country&&address.city" class="address">
+    <div v-if="address&&address.addressee&&address.phoneNumber" class="address">
       <div class="customerService">
         <div class="collect">
         </div>
@@ -10,8 +10,8 @@
           <div class="list">
             <div class="addresslist">
               <div>
-                <span>收货人：{{address.alias}}</span>
-                <span>{{address.telephone}}</span>
+                <span>收货人：{{address.addressee}}</span>
+                <span>{{address.phoneNumber}}</span>
               </div>
               <div class="info">
                 <p>收货地址：{{address.country+address.province+address.city+address.region+address.detailAddr}}</p>
@@ -40,7 +40,7 @@
           <div>
             <p>{{info.commodityName}}</p>
             <p><span class="realPrice">￥{{info.prices}}</span><span
-              class="virtualPrice">￥{{info.suggestPrices}}</span><span
+              class="virtualPrice" v-if="info.suggestPrices">￥{{info.suggestPrices}}</span><span
               class="monthlySales">×{{buyGoodsNum}}</span></p>
           </div>
         </div>
@@ -57,35 +57,35 @@
 
       </div>
     </div>
-    <!--<div class="selaGifts">-->
-    <!--<div class="buyGoods">-->
-    <!--<div class="giftInfos">-->
-    <!--<div class="left">满额赠红酒</div>-->
-    <!--<div class="right">已无其他赠品可选</div>-->
-    <!--</div>-->
-    <!--<div class="buyGoodsInfo">-->
-    <!--<img :src="info.list_pic_url" alt="">-->
-    <!--<div>-->
-    <!--<p>{{info.name}}</p>-->
-    <!--<p><span class="realPrice">￥0.00</span><span class="virtualPrice">￥{{info.retail_price}}</span><span-->
-    <!--class="monthlySales">×{{buyGoodsNum}}</span></p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="buyGoodsNum">-->
-    <!--<div class="buyGoodsNumText">店铺优惠</div>-->
-    <!--<div class="buyGoodsChangeNum">-->
-    <!--省 <span>100</span> 元：店铺优惠券1399-100-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="buyGoodsNum">-->
-    <!--<div class="buyGoodsNumText">邀请折扣</div>-->
-    <!--<div class="buyGoodsChangeNum">-->
-    <!--省 <span>94.95</span> 元：好友邀请折扣5%-->
-    <!--</div>-->
-    <!--</div>-->
+    <div class="selaGifts">
+      <div class="buyGoods">
+        <!--<div class="giftInfos">-->
+          <!--<div class="left">满额赠红酒</div>-->
+          <!--<div class="right">已无其他赠品可选</div>-->
+        <!--</div>-->
+        <!--<div class="buyGoodsInfo">-->
+          <!--<img :src="info.list_pic_url" alt="">-->
+          <!--<div>-->
+            <!--<p>{{info.name}}</p>-->
+            <!--<p><span class="realPrice">￥0.00</span><span class="virtualPrice">￥{{info.retail_price}}</span><span-->
+              <!--class="monthlySales">×{{buyGoodsNum}}</span></p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="buyGoodsNum">-->
+          <!--<div class="buyGoodsNumText">店铺优惠</div>-->
+          <!--<div class="buyGoodsChangeNum">-->
+            <!--省 <span>100</span> 元：店铺优惠券1399-100-->
+          <!--</div>-->
+        <!--</div>-->
+        <div class="buyGoodsNum">
+          <div class="buyGoodsNumText">邀请折扣</div>
+          <div class="buyGoodsChangeNum">
+            省 <span>{{discountPrice}}</span> 元：好友邀请折扣5%
+          </div>
+        </div>
 
-    <!--</div>-->
-    <!--</div>-->
+      </div>
+    </div>
     <div class="bottom">
       <div>
         合计金额 : <span>￥{{totalPrices}}</span>
@@ -106,6 +106,8 @@
   // } from "../../utils";
   export default {
     onLoad(option) {
+      wx.setStorageSync("addressId", "");
+
       this.initData();
       if (option.commodityId) {
         this.commodityId = option.commodityId
@@ -116,9 +118,9 @@
 
     },
     onShow() {
-      // if (wx.getStorageSync("addressId")) {
-      //   this.addressId = wx.getStorageSync("addressId");
-      // }
+      if (wx.getStorageSync("addressId")) {
+        this.addressId = wx.getStorageSync("addressId");
+      }
       // this.openId = getStorageOpenid();
       wx.setNavigationBarTitle({
         title: "确认订单"
@@ -139,7 +141,8 @@
         address: {},
         info: {},
         buyGoodsNum: 1,
-        totalPrices: 0
+        totalPrices: 0,
+        discountPrice:0
       };
     },
     components: {},
@@ -153,16 +156,20 @@
         this.allPrise = "";
         this.buyGoodsNum = 1;
         this.totalPrices = 0;
+        this.discountPrice = 0;
       },
       pay() {
         // if (this.address.name && this.address.address) {
-        if (this.address.country && this.address.city) {
+        if (this.address && this.address.addressee && this.address.phoneNumber) {
           var that = this;
-          var  orderJson = JSON.stringify({ addrId: that.address.addrId,"detailList": [{"commodityId":that.commodityId,"amount":that.buyGoodsNum}]})
+          var orderJson = JSON.stringify({
+            addrId: that.address.addrId,
+            "detailList": [{"commodityId": that.commodityId, "amount": that.buyGoodsNum}]
+          })
           wx.request({
             url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
             method: "post",
-            data: {"sessionID": that.$store.state.board.sessionID,orderJson:orderJson},
+            data: {"sessionID": that.$store.state.board.sessionID, orderJson: orderJson},
             header: {'content-type': 'application/x-www-form-urlencoded'},
             success: function (res) {
               console.log(res)
@@ -176,7 +183,7 @@
                     console.log(res)
                     if (res.data.success) {
                       wx.redirectTo({
-                        url:'/pages/orderCompletion/main'
+                        url: '/pages/orderCompletion/main'
                       })
                     } else {
                       wx.showToast({
@@ -234,13 +241,17 @@
           })
         } else {
           this.buyGoodsNum--;
+          this.$store.state.board.productInfos.buyGoodsNum--
         }
-        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
+        this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
       },
       addGoodsNum() {
         // 购买数量 加
         this.buyGoodsNum++;
-        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+        this.$store.state.board.productInfos.buyGoodsNum++;
+        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2);
+        this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2);
       },
       async getDetail() {
         var that = this;
@@ -251,12 +262,40 @@
           data: {"sessionID": that.$store.state.board.sessionID, "commodityId": that.commodityId},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
-            console.log(res)
+            console.log(res);
             if (res.data.success) {
               that.info = res.data.commodityVO;
-              that.info.filePath = that.$store.state.board.urlHttp +"/"+ that.info.filePath
+              that.info.filePath = that.$store.state.board.urlHttp + that.info.filePath;
               that.address = res.data.addr;
-              that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum).toFixed(2)
+              that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2);
+              that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2);
+              that.$store.state.board.productInfos = that.info;
+              that.$store.state.board.productInfos.buyGoodsNum = 1;
+              if (that.addressId) {
+                wx.request({
+                  url: that.$store.state.board.urlHttp + '/wechatapi/order/addr/getAddr',
+                  method: "post",
+                  data: {
+                    sessionID: that.$store.state.board.sessionID,
+                    addrId: that.addressId,
+                  },
+                  header: {'content-type': 'application/x-www-form-urlencoded'},
+                  success: function (res) {
+                    console.log(res)
+                    if (res.data.success && res.data.data) {
+                      that.address = res.data.data;
+                      that.address.addrId = that.addressId;
+                      console.log(that.address)
+                    } else {
+                      wx.showToast({
+                        title: res.data.msg,
+                        icon: 'none',
+                        duration: 2000
+                      })
+                    }
+                  }
+                })
+              }
             } else {
               wx.showToast({
                 title: res.data.msg,

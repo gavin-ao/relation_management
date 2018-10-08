@@ -9,11 +9,14 @@
      <p class="middleText">这是您刚购买的商品，试试快速分享！</p>
     <div class="buyGoods">
       <div class="buyGoodsInfo">
-        <img :src="orders.imgUrl" alt="">
+        <img :src="orders.filePath" alt="">
         <div>
-          <p>{{orders.text}}</p>
-          <p><span class="realPrice">￥{{orders.prices}}</span><span
-            class="monthlySales">×{{orders.number}}</span></p>
+          <p>{{orders.commodityName}}</p>
+          <p>
+            <span class="realPrice">￥{{orders.prices}}</span>
+            <span class="virtualPrice" v-if="orders.suggestPrices">￥{{orders.suggestPrices}}</span>
+            <span class="monthlySales">×{{orders.buyGoodsNum}}</span>
+          </p>
         </div>
       </div>
     </div>
@@ -29,10 +32,16 @@
   //   login,
   // } from '../../utils'
   export default {
-    mounted() {
+    onShow(){
       wx.setNavigationBarTitle({
         title: "订单完成"
       })
+      console.log(this.$store.state.board.productInfos)
+      this.orders = this.$store.state.board.productInfos;
+      console.log(this.orders)
+    },
+    mounted() {
+
     },
     data() {
       return {
@@ -40,14 +49,8 @@
         content: '',
         phone: '',
         orders: {
-            time:'2018-09-12 13:25',
-            imgUrl:'https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg',
-            text:'53度飞天茅台500ml酱香型+家常久 家常小酒500ml 浓香型',
-            prices:1999.00,
-            number: 1,
-            id:1,
-          }
 
+          }
       };
     },
     components: {},

@@ -20,7 +20,7 @@
     <div class="item detailadress">
       <span>详细地址</span>
       <textarea type="text" placeholder="请输入详细地址（5-120个字）" class="detailadress" v-model="detailadress"
-                placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
+                placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;padding-top:9px;">
       </textarea>
     </div>
     <div class="item itemend">
@@ -138,6 +138,8 @@
           success: function (res) {
             console.log(res)
             if (res.data.success) {
+              _this.userName =  res.data.data.addressee;
+              _this.telNumber = res.data.data.phoneNumber;
               _this.country = res.data.data.country;
               _this.province = res.data.data.province;
               _this.city = res.data.data.city;
@@ -191,11 +193,15 @@
             detailAddr: _this.detailadress,
             alias: '',
             addrId: _this.id,
-            defaultAddr:defaultAddr
+            defaultAddr:defaultAddr,
+            addressee: _this.userName,
+            phoneNumber: _this.telNumber,
           }
         }else{
           options = {
             sessionID: _this.$store.state.board.sessionID,
+            addressee: _this.userName,
+            phoneNumber: _this.telNumber,
             country: "中国",
             province: _this.province,
             city: _this.city,

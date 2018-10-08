@@ -103,18 +103,18 @@
         title: "商品详情页"
       })
     },
-    //商品转发
-    onShareAppMessage() {
-      console.log(this.info.name);
-      console.log(this.info.id);
-      console.log(this.gallery[0].img_url);
-
-      return {
-        title: this.info.name,
-        path: "/pages/goods/main?id=" + this.info.id,
-        imageUrl: this.gallery[0].img_url //拿第一张商品的图片
-      };
-    },
+    // //商品转发
+    // onShareAppMessage() {
+    //   console.log(this.info.name);
+    //   console.log(this.info.id);
+    //   console.log(this.gallery[0].img_url);
+    //
+    //   return {
+    //     title: this.info.name,
+    //     path: "/pages/goods/main?id=" + this.info.id,
+    //     imageUrl: this.gallery[0].img_url //拿第一张商品的图片
+    //   };
+    // },
     mounted() {
     },
     data() {
@@ -216,6 +216,15 @@
             var data = res.data;
             if (data.success) {
               that.gallery.push(that.paths)
+              that.$store.state.board.goToLink = that.paths;
+              if ( that.$store.state.board.goToLink) {
+                wx.getImageInfo({
+                  src:  that.$store.state.board.goToLink,
+                  success: (res) => {
+                    that.$store.state.board.drawPoster = res.path;
+                  }
+                })
+              }
               that.goods_desc = data.commodityVO.commodityImageTextList;
               for (var i = 0; i < that.goods_desc.length; i++) {
                 that.goods_desc[i] = that.$store.state.board.urlHttp + that.goods_desc[i]
