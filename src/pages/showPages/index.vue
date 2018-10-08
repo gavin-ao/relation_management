@@ -67,7 +67,7 @@
       var path = "/pages/index/main";
 
       if ( myInvitation) {
-        path = path + "myInvitation=" + myInvitation
+        path = path + "?myInvitation=" + myInvitation
       } else {
 
       }

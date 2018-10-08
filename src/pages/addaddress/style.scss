@@ -20,29 +20,38 @@
       font-family: Arial;
       margin-right: 20px;
     }
-    input,textarea {
+    input, textarea {
       flex: 1;
       height: 100%;
     }
-    picker{
+    picker {
       flex: 1;
       height: 35px;
-      input{
+      input {
         height: 35px;
         line-height: 35px;
       }
     }
-    .input-placeholder{
+    .input-placeholder {
       color: rgba(136, 136, 136, 1);
       font-size: 14px;
     }
+    .regionSpan {
+      color: rgba(136, 136, 136, 1);
+      font-size: 14px;
+    }
+    p.displaySpan{
+      color: #000;
+      font-size: 18px;
+    }
 
   }
-  .detailadress{
+  .detailadress {
     height: 80px;
-    textarea{
+    textarea {
       //padding-top: 9px;
     }
+
   }
   .itemend {
     margin-top: 20px;

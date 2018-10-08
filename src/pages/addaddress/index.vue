@@ -13,8 +13,14 @@
     <div class="item">
       <span>省市地区</span>
       <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
-        <input type="text" placeholder="点击选择" v-model="address"
-               placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
+        <!--<input type="text" placeholder="点击选择"-->
+               <!--placeholder-style="">-->
+        <p class="displaySpan" v-if="displaySpan==true">
+        {{address}}
+        </p>
+        <p class="regionSpan" v-else>
+          点击选择
+        </p>
       </picker>
     </div>
     <div class="item detailadress">
@@ -72,10 +78,12 @@
         this.region = `${this.res.countyName}`;
         this.address = `${this.res.provinceName} ${this.res.cityName} ${this.res.countyName}`;
         this.detailadress = this.res.detailInfo;
+        this.displaySpan = true
       }
       if (this.$root.$mp.query.id) {
         console.log(this.$root.$mp.query.id)
         this.id = this.$root.$mp.query.id;
+        this.displaySpan = true
         this.getDetail();
       }
     },
@@ -96,7 +104,8 @@
         city: "",
         region: "",
         alias: "",
-        lastChoose: ""
+        lastChoose: "",
+        displaySpan: false
       };
     },
     methods: {
@@ -116,6 +125,7 @@
           this.region = "",
           this.alias = "",
           this.lastChoose = ""
+          this.displaySpan = false
       },
       bindRegionChange(e) {
         var value = e.mp.detail.value;
@@ -124,6 +134,7 @@
         this.province = value[0]
         this.city = value[1]
         this.region = value[2]
+        this.displaySpan = true
       },
       async getDetail() {
         var _this = this;
