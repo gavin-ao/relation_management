@@ -15,8 +15,7 @@
         <p>{{info.commodityName}}</p>
         <!--<p>{{info.goods_brief}}</p>-->
         <p><span class="realPrice">￥{{info.prices}}</span><span class="virtualPrice">￥{{info.suggestPrices}}</span>
-          <!--<span class="monthlySales">月销： {{info.sell_volume}}{{info.goods_unit}}</span>-->
-          <span class="monthlySales">月销： 0</span>
+          <span class="monthlySales">月销： {{salesVolume}}</span>
         </p>
 
       </div>
@@ -76,7 +75,7 @@
         </div>
         <div><span>客服</span></div>
       </div>
-      <div class="shareFriend" @click="shareFriend" v-if="otherInvitation=='otherInvitation'">
+      <div class="shareFriend" @click="shareFriend" v-if="share==true">
         分享给好友
       </div>
       <div class="purchaseImmediately" @click="bug">立即购买</div>
@@ -137,7 +136,9 @@
         goodsId: "",
         allPrise: "",
         currentNum: 0,
-        scrollTop: 0
+        scrollTop: 0,
+        salesVolume:0,
+        share:false
       };
     },
     components: {
@@ -163,6 +164,8 @@
         this.allPrise = "";
         this.currentNum = 0;
         this.scrollTop = 0;
+        this.salesVolume = 0;
+        this.share = false;
       },
       detailContent(index) {
         this.currentNum = index;
@@ -215,7 +218,9 @@
             console.log(res)
             var data = res.data;
             if (data.success) {
-              that.gallery.push(that.paths)
+              that.salesVolume = data.salesVolume;
+              that.share = data.share;
+              that.gallery.push(that.paths);
               that.$store.state.board.goToLink = that.paths;
               if ( that.$store.state.board.goToLink) {
                 wx.getImageInfo({
@@ -243,11 +248,7 @@
       }
     },
     computed: {
-      otherInvitation:function () {
-        if(!this.$store.state.board.otherInvitation){
-          return "otherInvitation"
-        }
-      }
+
     }
   };
 </script>

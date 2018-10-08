@@ -21,12 +21,12 @@
       }
     }
   }
-  .swiperReward{
+  .swiperReward {
     position: fixed;
     top: 16px;
     left: 10px;
     height: 28px;
-    border-radius: 14px;
+    border-radius: 5px;
     min-width: 182px;
     background-color: rgba(16, 16, 16, .38);
     color: #FFFFFF;
@@ -43,11 +43,16 @@
 
         span {
           display: inline-block;
-          width: calc(100% - 35px);
+          width: calc(100% - 30px);
           height: 100%;
           line-height: 28px;
           font-size: 12px;
           float: right;
+          word-wrap: break-word;
+          word-break: break-all;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .slide-image {
           width: 28px;
@@ -86,7 +91,7 @@
             line-height: 22px;
             float: left;
           }
-          span.spanLine{
+          span.spanLine {
             width: 80%;
             display: none;
             margin-left: 10%;
@@ -95,10 +100,10 @@
             float: left;
             border-bottom: 2px solid red;
           }
-          span.rewardTextSpan.changeColor{
+          span.rewardTextSpan.changeColor {
             color: red;
           }
-          span.spanLine.changeHideShow{
+          span.spanLine.changeHideShow {
             display: inline-block;
           }
         }
@@ -142,9 +147,9 @@
         p:nth-child(2) {
           overflow: hidden;
           text-overflow: ellipsis;
-          display:-webkit-box; //作为弹性伸缩盒子模型显示。
-          -webkit-box-orient:vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
-          -webkit-line-clamp:2; //显示的行
+          display: -webkit-box; //作为弹性伸缩盒子模型显示。
+          -webkit-box-orient: vertical; //设置伸缩盒子的子元素排列方式--从上到下垂直排列
+          -webkit-line-clamp: 2; //显示的行
           font-size: 14px;
           color: #101010;
           height: 35px;
@@ -155,20 +160,20 @@
           font-size: 16px;
           font-family: Arial;
           line-height: 23px;
-          span.realPrice{
+          span.realPrice {
             display: inline-block;
             text-align: left;
             color: rgba(237, 23, 9, 1);
           }
-          span.virtualPrice{
+          span.virtualPrice {
             display: inline-block;
             margin-left: 10px;
             font-size: 12px;
             text-align: left;
             color: rgba(102, 100, 102, 1);
-            text-decoration:line-through;
+            text-decoration: line-through;
           }
-          span.purchaseImmediately{
+          span.purchaseImmediately {
             display: inline-block;
             width: 73px;
             height: 23px;
