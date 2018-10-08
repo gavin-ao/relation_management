@@ -64,7 +64,7 @@
       }
 
       var myInvitation = that.$store.state.board.myInvitation
-      var path = "/pages/activePower/main";
+      var path = "/pages/index/main";
 
       if ( myInvitation) {
         path = path + "myInvitation=" + myInvitation
@@ -235,7 +235,7 @@
           appid: that.$store.state.board.appid,
           secret: that.$store.state.board.secret,
           sessionID: sessionID,
-          path: 'pages/activePower/main?myInvitation=' + myInvitation
+          path: 'pages/index/main?myInvitation=' + myInvitation
         },
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
