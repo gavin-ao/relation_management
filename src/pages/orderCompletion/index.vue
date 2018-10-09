@@ -1,12 +1,35 @@
 <template>
   <div class="orderCompletion">
-      <div class="titleText">
-        <p>感谢您购买我们的产品，我们会尽快为您发货！<br/>
-          即刻起，您已成为我们的VIP会员，之后的每次购物都将享受95折优惠！<br/>
-          此外，您可以在商品页将喜爱的商品推荐给好友，好友通过您的邀请链接购买商品可立刻获得95折优惠，好友成功下单，您也将获得商品原价的5%作为回报。<br/>
-          心动不如行动，快和好友一起分享好东西吧！<br/></p>
-      </div>
-     <p class="middleText">这是您刚购买的商品，试试快速分享！</p>
+    <div class="titleText">
+      <p>感谢您购买我们的产品，我们会尽快为您发货！<br/>
+        即刻起，您已成为我们的VIP会员，之后的每次购物都将享受95折优惠！<br/>
+        此外，您可以在商品页将喜爱的商品推荐给好友，好友通过您的邀请链接购买商品可立刻获得95折优惠，好友成功下单，您也将获得商品原价的5%作为回报。
+      </p>
+      <table>
+        <tr>
+          <th>累计返利(元)</th>
+          <th>奖励比例</th>
+          <th>奖励金额(元)</th>
+        </tr>
+        <tr>
+          <td>1000~2000</td>
+          <td>10%</td>
+          <td>100~200</td>
+        </tr>
+        <tr>
+          <td>2001~3000</td>
+          <td>15%</td>
+          <td>300.15~450</td>
+        </tr>
+        <tr>
+          <td>3001以上</td>
+          <td>25%</td>
+          <td>750.25+</td>
+        </tr>
+      </table>
+    </div>
+    <p class="middleText">心动不如行动，快和好友一起分享好东西吧！<br/>这是您刚购买的商品，试试快速分享！</p>
+
     <div class="buyGoods">
       <div class="buyGoodsInfo">
         <img :src="orders.filePath" alt="">
@@ -33,11 +56,11 @@
   //   login,
   // } from '../../utils'
   export default {
-    onShow(){
+    onShow() {
       wx.setNavigationBarTitle({
         title: "订单完成"
       })
-      if(this.$store.state.board.productInfos.buyGoodsNum){
+      if (this.$store.state.board.productInfos.buyGoodsNum) {
         this.orders = this.$store.state.board.productInfos;
       }
       console.log(this.orders)
@@ -53,9 +76,7 @@
         userInfo: {},
         content: '',
         phone: '',
-        orders: {
-
-          }
+        orders: {}
       };
     },
     components: {},
@@ -72,7 +93,7 @@
           success: function (res) {
             console.log(res)
             if (res.data.success) {
-              _this.$store.state.board.myInvitation= res.data.invitation;
+              _this.$store.state.board.myInvitation = res.data.invitation;
               wx.navigateTo({
                 url: "/pages/showPages/main"
               });

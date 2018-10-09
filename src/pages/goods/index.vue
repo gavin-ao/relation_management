@@ -38,7 +38,7 @@
           <!--<p v-html="goods_desc"></p>-->
           <!--<wxParse :content="goods_desc"/>-->
           <block v-for="(item, index) in goods_desc " :key="index">
-            <image :src="item" class="slide-image" mode="aspectFit"/>
+            <image :src="item" class="slide-image" mode="widthFix"/>
           </block>
 
         </div>
