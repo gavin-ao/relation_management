@@ -12,10 +12,11 @@
         <img :src="orders.filePath" alt="">
         <div>
           <p>{{orders.commodityName}}</p>
+          <span class="unitPrice">{{orders.discountPrices}}<br/>×{{orders.buyGoodsNum}}</span>
           <p>
-            <span class="realPrice">￥{{orders.prices}}</span>
-            <span class="virtualPrice" v-if="orders.suggestPrices">￥{{orders.suggestPrices}}</span>
-            <span class="monthlySales">×{{orders.buyGoodsNum}}</span>
+            <span class="realPrice">￥{{orders.totalPrices}}</span>
+            <!--<span class="virtualPrice" v-if="orders.suggestPrices">￥{{orders.suggestPrices}}</span>-->
+            <!--<span class="monthlySales">×{{item.amount}}</span>-->
           </p>
         </div>
       </div>
@@ -36,12 +37,16 @@
       wx.setNavigationBarTitle({
         title: "订单完成"
       })
-      console.log(this.$store.state.board.productInfos)
-      this.orders = this.$store.state.board.productInfos;
+      if(this.$store.state.board.productInfos.buyGoodsNum){
+        this.orders = this.$store.state.board.productInfos;
+      }
       console.log(this.orders)
     },
     mounted() {
-
+      // if (this.$root.$mp.query.res) {
+      //   this.orders = JSON.parse(decodeURIComponent(this.$root.$mp.query.res));
+      //   console.log(this.res);
+      // }
     },
     data() {
       return {

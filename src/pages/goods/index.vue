@@ -1,7 +1,7 @@
 <template>
   <div class="goods">
     <div class="swiper">
-      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+      <swiper class="swiper-container" autoplay="true" interval="3000" duration="1000">
         <block v-for="(item, index) in gallery " :key="index">
           <swiper-item class="swiper-item">
             <image :src="item" class="slide-image"/>
@@ -44,6 +44,9 @@
         </div>
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==1}">
+        <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
+          暂无内容
+        </div>
         <!--<div v-if="attribute.length!=0" class="attribute">-->
         <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
         <!--<div>{{item.name}}</div>-->
@@ -52,6 +55,9 @@
         <!--</div>-->
       </div>
       <div class="detailsInfo" :class="{detailText: currentNum==2}">
+        <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
+          暂无内容
+        </div>
         <!--<div class="common-problem">-->
         <!--<div class="b">-->
         <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
@@ -137,8 +143,7 @@
         allPrise: "",
         currentNum: 0,
         scrollTop: 0,
-        salesVolume:0,
-        share:false
+        salesVolume:0
       };
     },
     components: {
@@ -165,7 +170,6 @@
         this.currentNum = 0;
         this.scrollTop = 0;
         this.salesVolume = 0;
-        this.share = false;
       },
       detailContent(index) {
         this.currentNum = index;
@@ -219,7 +223,7 @@
             var data = res.data;
             if (data.success) {
               that.salesVolume = data.salesVolume;
-              that.share = data.share;
+              that.$store.state.board.share = data.share;
               that.gallery.push(that.paths);
               that.$store.state.board.goToLink = that.paths;
               if ( that.$store.state.board.goToLink) {
@@ -248,7 +252,9 @@
       }
     },
     computed: {
-
+      share(){
+        return this.$store.state.board.share;
+      }
     }
   };
 </script>

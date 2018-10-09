@@ -1,14 +1,14 @@
 <template>
   <div class="my">
     <div class="myinfo">
-      <img @click="toLogin" :src="avator" alt="">
-      <div @click="toLogin">
-        <p>{{userInfo.nickName}}</p>
+      <img :src="avatarUrl" alt="">
+      <div>
+        <p>{{nickName}}</p>
         <!--<p v-if="userInfo.nickname">点击登录</p>-->
         <!--<p v-else>微信用户</p>-->
       </div>
       <div>
-        <p><img src="/static/images/huangguan.png" alt="">上月排名:12</p>
+        <p><img src="/static/images/huangguan.png" alt="">上月排名: <span v-if="ranking<99">{{ranking}}</span> <span v-else>99+</span>  </p>
       </div>
     </div>
     <div class="gainARebate">
@@ -48,10 +48,11 @@
     },
     data() {
       return {
-        avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
-        userInfo:{nickName:"王五"},
+        // avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
+        // userInfo:{nickName:"王五"},
         inviterNum:0,
-        rebateMoney:0
+        rebateMoney:0,
+        ranking:12
       };
     },
     components: {},
@@ -82,7 +83,14 @@
       }
 
     },
-    computed: {}
+    computed: {
+      nickName() {
+        return this.$store.state.board.nickName
+      },
+      avatarUrl() {
+        return this.$store.state.board.avatarUrl;
+      },
+    }
   };
 
 </script>

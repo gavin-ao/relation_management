@@ -16,6 +16,7 @@ const state = {
   drawPoster:'',
   productInfos:{},
   goToLink:'',
+  share:false,
   appid:'wxef5d2c8115a34065',
   secret:'cb91e07ac0071dce2d304afcc26b6b83',
   headPic:[],

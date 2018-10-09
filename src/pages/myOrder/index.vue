@@ -6,8 +6,9 @@
           <div class="titleText">
             <p>
               <span>{{items.time}}</span>
-              <span v-if="items.state">已完成</span>
-              <span class="payment" v-else>去付款></span>
+              <!--<span v-if="items.state">已完成</span>-->
+              <span>已完成</span>
+              <!--<span class="payment" v-else @click="continuePay(items.orderId,item)">去付款></span>-->
             </p>
           </div>
           <div class="buyGoods">
@@ -15,10 +16,11 @@
               <img :src="item.filePath" alt="">
               <div>
                 <p>{{item.commodityName}}</p>
+                <span class="unitPrice">{{item.discountPrices}}<br/>×{{item.amount}}</span>
                 <p>
-                  <span class="realPrice">￥{{item.unitPrice}}</span>
+                  <span class="realPrice">￥{{item.realPayment}}</span>
                   <!--<span class="virtualPrice" v-if="orders.suggestPrices">￥{{orders.suggestPrices}}</span>-->
-                  <span class="monthlySales">×{{item.amount}}</span>
+                  <!--<span class="monthlySales">×{{item.amount}}</span>-->
                 </p>
               </div>
             </div>
@@ -74,7 +76,8 @@
                   data[i].time = new Date(data[i].createAt).toLocaleString();
                   for (var j = 0; j < data[i].detailList.length; j++) {
                     data[i].detailList[j].filePath = _this.$store.state.board.urlHttp + data[i].detailList[j].filePath;
-                    data[i].detailList[j].unitPrice = (data[i].detailList[j].unitPrice*0.95).toFixed(2);
+                    data[i].detailList[j].realPayment = data[i].detailList[j].realPayment.toFixed(2);
+                    data[i].detailList[j].discountPrices = (data[i].detailList[j].realPayment/data[i].detailList[j].amount).toFixed(2);
                   }
                 }
               } else {
@@ -82,6 +85,32 @@
               }
               _this.orders = data;
               console.log(_this.data)
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          }
+        })
+      },
+      continuePay(orderId,item){
+        var that = this;
+        wx.request({
+          url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+          method: "post",
+          data: {"sessionID": that.$store.state.board.sessionID, orderId: orderId,},
+          header: {'content-type': 'application/x-www-form-urlencoded'},
+          success: function (res) {
+            console.log(res)
+            if (res.data.success) {
+              item.prices = item.unitPrice;
+              item.buyGoodsNum = item.amount;
+              var item = encodeURIComponent(JSON.stringify(item));
+              wx.redirectTo({
+                url: '/pages/orderCompletion/main?item='+item
+              })
             } else {
               wx.showToast({
                 title: res.data.msg,

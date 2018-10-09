@@ -64,7 +64,7 @@
       }
 
       var myInvitation = that.$store.state.board.myInvitation
-      var path = "/pages/index/main";
+      var path = "/pages/logs/main";
 
       if ( myInvitation) {
         path = path + "?myInvitation=" + myInvitation
@@ -94,30 +94,30 @@
         ctx.draw(true);
         ctx.beginPath()
         ctx.setStrokeStyle('rgba(187, 141, 94, 1)')
-        ctx.strokeRect(13, 5, (this.getWindowWidth-26), (that.ctxHeight-20));
+        ctx.strokeRect(13, 35, (this.getWindowWidth-26), (that.ctxHeight-90));
         ctx.draw(true);
-        var heights = that.ctxHeight - 20;
-        ctx.drawImage(that.drawPoster, 13, 63, (that.getWindowWidth - 26), heights - 200);
+        var heights = that.ctxHeight - 80;
+        ctx.drawImage(that.drawPoster, 13, 93, (that.getWindowWidth - 26), heights - 200);
         ctx.draw(true);
         // ctx.drawImage('/static/img/shareBack1.png', 13, 53, (that.getWindowWidth - 26), heights-20);
         // ctx.draw(true);
         ctx.setFontSize(22);
         ctx.setFillStyle('rgba(251, 90, 25, 1)');
-        ctx.fillText('找我买茅台，全单', 20, heights - 80);
-        ctx.fillText('95折！折上折！', 25, heights - 45);
+        ctx.fillText('找我买茅台，全单', 20, heights - 60);
+        ctx.fillText('95折！折上折！', 25, heights - 25);
         ctx.draw(true);
         if (that.drawAvatarUrl) {
           ctx.save();
           ctx.beginPath();
-          ctx.arc(48, 35, 20, 0, Math.PI * 2, false);
+          ctx.arc(48, 65, 20, 0, Math.PI * 2, false);
           ctx.clip();
-          ctx.drawImage(that.drawAvatarUrl, 28, 15, 40, 40);
+          ctx.drawImage(that.drawAvatarUrl, 28, 45, 40, 40);
           ctx.restore();
           ctx.draw(true);
         }
         ctx.setFontSize(16);
         ctx.setFillStyle('red');
-        ctx.fillText(that.nickName, 75, 40);
+        ctx.fillText(that.nickName, 75, 70);
         ctx.draw(true);
 
         var qrcodeUrl = that.$store.state.board.qrcodeUrl;
@@ -128,16 +128,16 @@
           success: (res) => {
             ctx.save();
             ctx.beginPath();
-            ctx.arc((that.getWindowWidth - 76), heights - 75, 50, 0, Math.PI * 2, false);
+            ctx.arc((that.getWindowWidth - 68), heights - 55, 50, 0, Math.PI * 2, false);
             ctx.setFillStyle('rgba(255, 255, 255, 0.7)');
             ctx.fill();
             ctx.clip();
-            ctx.drawImage(res.path, (that.getWindowWidth - 126), heights - 125, 100, 100);
+            ctx.drawImage(res.path, (that.getWindowWidth - 118), heights - 105, 100, 100);
             ctx.restore();
             ctx.draw(true);
             ctx.setFontSize(10);
             ctx.setFillStyle('rgba(87, 87, 87, 1)');
-            ctx.fillText('长按识别小程序码', (that.getWindowWidth - 116),  heights-10);
+            ctx.fillText('长按识别小程序码', (that.getWindowWidth - 116),  heights+10);
             ctx.draw(true);
             wx.hideLoading();
           }
@@ -235,7 +235,7 @@
           appid: that.$store.state.board.appid,
           secret: that.$store.state.board.secret,
           sessionID: sessionID,
-          path: 'pages/index/main?myInvitation=' + myInvitation
+          path: 'pages/logs/main?myInvitation=' + myInvitation
         },
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
@@ -267,6 +267,8 @@
       margin-top: 12px;
       position: relative;
       border-radius: 10px;
+      border: 1px solid rgba(187, 141, 94, 1);
+      box-sizing: border-box;
       .nickname {
         /*margin-top: 10px;*/
         z-index: 100;
@@ -283,7 +285,7 @@
         }
         span {
           display: inline-block;
-          color: #CAA363;
+          color: rgba(251, 90, 25, 1);
         }
         .names {
           margin-top: 5px;

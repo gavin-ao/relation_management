@@ -13,7 +13,7 @@
       <swiper class="swiper-container" autoplay="true" interval="3000" circular="true" vertical="true" duration="500">
         <block v-for="(item, index) in rewardText " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item. avatarUrl" class="slide-image" />
+            <image :src="item.avatarUrl" class="slide-image" />
             <span :title="item.text"> {{item.text}}</span>
           </swiper-item>
         </block>
@@ -71,10 +71,10 @@ export default {
       topicList: [],
       newCategoryList: [],
       rewardText:[
-//        {text:"河南的苍桑岁月获得20元返利",url:'https://wx.qlogo.cn/mmopen/vi_32/L8NGdoufoBJukROfZeVjYh2gjtYBJeP9AmhfiaPOVUJcVGiaApbn7Wrx0SxJ5Fjicp0FzBYChDMgyicuT4ictlRdYhQ/132'},
-//        {text:"北京的summer获得25元返利",url:'https://yanxuan.nosdn.127.net/31da695c84cabd0eaff054265da29e5c.jpg'},
-//        {text:"北京的智慧营销获得50元返利",url:'https://wx.qlogo.cn/mmopen/vi_32/rlsy4vH1eSibfUv2WsjyhtvGw2jQDeBxGJMSnH8JLSP0VP1NJxKE0ibaIfpCxhNwtII3xaWic3Kj9GVsiaDUcwOy6w/132'},
-//        {text:"北京的智慧营销获得10元返利",url:'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIwCouHtg8oQvoCwa3BUsiauQB9pgic2wdemjQ6kJq5KMpICXocjtWoibku0ettQnpyiaCB7sfBF8Sp7g/132'}
+        {text:"河南的苍桑岁月获得20元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/L8NGdoufoBJukROfZeVjYh2gjtYBJeP9AmhfiaPOVUJcVGiaApbn7Wrx0SxJ5Fjicp0FzBYChDMgyicuT4ictlRdYhQ/132'},
+       {text:"北京的summer获得25元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIwCouHtg8oQvoCwa3BUsiauQB9pgic2wdemjQ6kJq5KMpICXocjtWoibku0ettQnpyiaCB7sfBF8Sp7g/132'},
+       {text:"北京的智慧营销获得50元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/rlsy4vH1eSibfUv2WsjyhtvGw2jQDeBxGJMSnH8JLSP0VP1NJxKE0ibaIfpCxhNwtII3xaWic3Kj9GVsiaDUcwOy6w/132'},
+       {text:"北京的智慧营销获得10元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIwCouHtg8oQvoCwa3BUsiauQB9pgic2wdemjQ6kJq5KMpICXocjtWoibku0ettQnpyiaCB7sfBF8Sp7g/132'}
         ]
     };
   },
@@ -97,16 +97,16 @@ export default {
               that.banner.push(that.$store.state.board.urlHttp+data.filePathList[i])
             }
             that.channel = data.catgList;
-            that.rewardText = data.rebateList;
-            if(that.rewardText.length>0){
-              for(var i=0;i<that.rewardText.length;i++){
-                if(that.rewardText[i].province){
-                  that.rewardText[i].text = that.rewardText[i].province+"的"+that.rewardText[i].nickName +"获得"+ that.rewardText[i].rebateMoney+"元返利";
-                }else{
-                  that.rewardText[i].text = that.rewardText[i].nickName +"获得"+ that.rewardText[i].rebateMoney+"元返利";
-                }
-              }
-            }
+            // that.rewardText = data.rebateList;
+            // if(that.rewardText.length>0){
+            //   for(var i=0;i<that.rewardText.length;i++){
+            //     if(that.rewardText[i].province){
+            //       that.rewardText[i].text = that.rewardText[i].province+"的"+that.rewardText[i].nickName +"获得"+ that.rewardText[i].rebateMoney+"元返利";
+            //     }else{
+            //       that.rewardText[i].text = that.rewardText[i].nickName +"获得"+ that.rewardText[i].rebateMoney+"元返利";
+            //     }
+            //   }
+            // }
             that.categoryList(that.channel[0],0)
           }else{
             wx.showToast({

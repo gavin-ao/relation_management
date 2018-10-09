@@ -77,7 +77,7 @@
             <!--省 <span>100</span> 元：店铺优惠券1399-100-->
           <!--</div>-->
         <!--</div>-->
-        <div class="buyGoodsNum">
+        <div class="buyGoodsNum" v-if="discount">
           <div class="buyGoodsNumText">邀请折扣</div>
           <div class="buyGoodsChangeNum">
             省 <span>{{discountPrice}}</span> 元：好友邀请折扣5%
@@ -160,8 +160,12 @@
       },
       pay() {
         // if (this.address.name && this.address.address) {
+        console.log( this.buyGoodsNum)
         if (this.address && this.address.addressee && this.address.phoneNumber) {
           var that = this;
+          that.$store.state.board.productInfos.buyGoodsNum = that.buyGoodsNum;
+          that.$store.state.board.productInfos.discountPrices =  (that.totalPrices /that.buyGoodsNum).toFixed(2);
+          that.$store.state.board.productInfos.totalPrices =  that.totalPrices;
           var orderJson = JSON.stringify({
             addrId: that.address.addrId,
             "detailList": [{"commodityId": that.commodityId, "amount": that.buyGoodsNum}]
@@ -243,15 +247,23 @@
           this.buyGoodsNum--;
           this.$store.state.board.productInfos.buyGoodsNum--
         }
-        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
-        this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
+        if(this.discount){
+          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
+          this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
+        }else{
+          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+        }
       },
       addGoodsNum() {
         // 购买数量 加
         this.buyGoodsNum++;
         this.$store.state.board.productInfos.buyGoodsNum++;
-        this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2);
-        this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2);
+        if(this.discount){
+          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
+          this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
+        }else{
+          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+        }
       },
       async getDetail() {
         var that = this;
@@ -267,8 +279,14 @@
               that.info = res.data.commodityVO;
               that.info.filePath = that.$store.state.board.urlHttp + that.info.filePath;
               that.address = res.data.addr;
-              that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2);
-              that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2);
+              if(that.discount){
+                that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2)
+                that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2)
+              }else{
+                that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum).toFixed(2)
+              }
+              // that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2);
+              // that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2);
               that.$store.state.board.productInfos = that.info;
               that.$store.state.board.productInfos.buyGoodsNum = 1;
               if (that.addressId) {
@@ -328,7 +346,11 @@
 
       }
     },
-    computed: {}
+    computed: {
+      discount(){
+        return Boolean(this.$store.state.board.share ||  this.$store.state.board.otherInvitation);
+      }
+    }
   };
 
 </script>

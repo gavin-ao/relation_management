@@ -13,14 +13,14 @@
     <div class="item">
       <span>省市地区</span>
       <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
-        <!--<input type="text" placeholder="点击选择"-->
-               <!--placeholder-style="">-->
-        <p class="displaySpan" v-if="displaySpan==true">
-        {{address}}
-        </p>
-        <p class="regionSpan" v-else>
-          点击选择
-        </p>
+        <input type="text" placeholder="点击选择" disabled="true" v-model="address"
+               placeholder-style=" color: rgba(136, 136, 136, 1);font-size: 28rpx;">
+        <!--<p class="displaySpan" v-if="displaySpan==true">-->
+        <!--{{address}}-->
+        <!--</p>-->
+        <!--<p class="regionSpan" v-else>-->
+          <!--点击选择-->
+        <!--</p>-->
       </picker>
     </div>
     <div class="item detailadress">
@@ -78,12 +78,12 @@
         this.region = `${this.res.countyName}`;
         this.address = `${this.res.provinceName} ${this.res.cityName} ${this.res.countyName}`;
         this.detailadress = this.res.detailInfo;
-        this.displaySpan = true
+        // this.displaySpan = true
       }
       if (this.$root.$mp.query.id) {
         console.log(this.$root.$mp.query.id)
         this.id = this.$root.$mp.query.id;
-        this.displaySpan = true
+        // this.displaySpan = true
         this.getDetail();
       }
     },
@@ -134,7 +134,7 @@
         this.province = value[0]
         this.city = value[1]
         this.region = value[2]
-        this.displaySpan = true
+        // this.displaySpan = true
       },
       async getDetail() {
         var _this = this;
@@ -256,10 +256,7 @@
         var _this = this;
         wx.chooseAddress({
           success: function (res) {
-            // _this.userName = res.userName;
-            // _this.telNumber = res.telNumber;
-            // _this.address = `${res.provinceName} ${res.cityName} ${res.countyName}`;
-            // _this.detailadress = res.detailInfo;
+            // _this.displaySpan = true;
             _this.userName = res.userName;
             _this.telNumber = res.telNumber;
             _this.country = `中国`;

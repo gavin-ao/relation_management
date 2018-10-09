@@ -26,7 +26,7 @@
       height: 110px;
       padding: 5px 10px;
       line-height: 20px;
-      background-color: rgba(248, 248, 248, 1);
+      background-color: #FFFFFF;
       color: rgba(16, 16, 16, 1);
       font-size: 14px;
       font-family: Arial;
@@ -48,13 +48,21 @@
         p:nth-child(1) {
           height: 80px;
           color: rgba(16, 16, 16, 1);
+          width: calc(100% - 70px);
           font-size: 12px;
           text-align: left;
           font-family: PingFangSC-regular;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        p:nth-child(2) {
+        span.unitPrice{
+          display: inline-block;
+          float: right;
+          text-align: right;
+          color: rgba(111, 111, 111, 1);
+          font-size: 12px;
+        }
+        p:nth-child(3) {
           width: 100%;
           line-height: 23px;
           color: rgba(237, 23, 9, 1);
@@ -62,6 +70,7 @@
           span.realPrice {
             font-size: 16px;
             color: rgba(237, 23, 9, 1);
+            float: right;
           }
           span.virtualPrice {
             display: inline-block;

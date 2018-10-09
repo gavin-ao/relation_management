@@ -5,7 +5,7 @@
 
   .swiper {
     width: 100%;
-    height: 208px;
+    height: 260px;
     .swiper-container {
       width: 100%;
       height: 100%;
@@ -26,13 +26,13 @@
     top: 16px;
     left: 10px;
     height: 28px;
-    border-radius: 5px;
+    border-radius: 14px;
     min-width: 182px;
     background-color: rgba(16, 16, 16, .38);
     color: #FFFFFF;
     font-size: 14px;
     font-family: Microsoft Yahei;
-    border: 1px solid rgba(187, 187, 187, 1);
+    //border: 1px solid rgba(187, 187, 187, 1);
     z-index: 1000;
     .swiper-container {
       width: 100%;
@@ -73,6 +73,7 @@
       .scroll-view {
         width: 100%;
         white-space: nowrap;
+        font-family: Microsoft Yahei;
         li {
           min-width: 60px;
           height: 30px;
@@ -90,6 +91,8 @@
             font-size: 15px;
             line-height: 22px;
             float: left;
+            color: #555555;
+            font-family: Microsoft Yahei;
           }
           span.spanLine {
             width: 80%;
@@ -113,13 +116,13 @@
 
   .newcategory {
     margin-top: 10px;
-    padding: 0 5px 12px 5px;
+    //padding: 0 5px 12px 5px;
     .sublist {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       width: 100%;
-      height: 373px;
+      height: 460px;
       margin: 0 auto;
 
       div {
@@ -132,7 +135,7 @@
         img {
           display: block;
           width: 100%;
-          height: calc(100% - 75px);
+          height: 375px;
           margin: 0 auto;
         }
 
@@ -163,7 +166,7 @@
           span.realPrice {
             display: inline-block;
             text-align: left;
-            color: rgba(237, 23, 9, 1);
+            color: rgba(251, 90, 25, 1);
           }
           span.virtualPrice {
             display: inline-block;
@@ -179,7 +182,7 @@
             height: 23px;
             float: right;
             border-radius: 4px;
-            background-color: rgba(229, 28, 35, 1);
+            background-color: rgba(251, 90, 25, 1);
             color: rgba(255, 255, 255, 1);
             font-size: 14px;
             text-align: center;

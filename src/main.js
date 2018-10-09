@@ -30,13 +30,13 @@ export default {
     pages: ["^pages/logs/main", "pages/authorize/main", "pages/showPages/main", "pages/index/main", "pages/goods/main", "pages/order/main", "pages/addressSelect/main", "pages/addaddress/main", "pages/my/main", "pages/myOrder/main","pages/orderCompletion/main",],
     window: {
       backgroundTextStyle: "light",
-      navigationBarBackgroundColor: "#000",
+      navigationBarBackgroundColor: "#FFF",
       navigationBarTitleText: "",
-      navigationBarTextStyle: "white"
+      navigationBarTextStyle: "black"
     },
     "tabBar": {
-      "backgroundColor": "rgba(247, 247, 247, 0.8)",
-      "borderStyle": "white",
+      "backgroundColor": "#F5F5F5",
+      "borderStyle": "#FFF",
       "selectedColor": "#ED1709",
       "color": "#666",
       "list": [{
