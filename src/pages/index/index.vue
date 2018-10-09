@@ -71,10 +71,10 @@ export default {
       topicList: [],
       newCategoryList: [],
       rewardText:[
-        {text:"河南的苍桑岁月获得20元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/L8NGdoufoBJukROfZeVjYh2gjtYBJeP9AmhfiaPOVUJcVGiaApbn7Wrx0SxJ5Fjicp0FzBYChDMgyicuT4ictlRdYhQ/132'},
-       {text:"北京的summer获得25元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIwCouHtg8oQvoCwa3BUsiauQB9pgic2wdemjQ6kJq5KMpICXocjtWoibku0ettQnpyiaCB7sfBF8Sp7g/132'},
-       {text:"北京的智慧营销获得50元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/rlsy4vH1eSibfUv2WsjyhtvGw2jQDeBxGJMSnH8JLSP0VP1NJxKE0ibaIfpCxhNwtII3xaWic3Kj9GVsiaDUcwOy6w/132'},
-       {text:"北京的智慧营销获得10元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIwCouHtg8oQvoCwa3BUsiauQB9pgic2wdemjQ6kJq5KMpICXocjtWoibku0ettQnpyiaCB7sfBF8Sp7g/132'}
+        {text:"河南的苍桑岁月获得20元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/T7XSMh9H1MKQUZ3PC0zqAKI3BrEb7PPqBMHpoia9RySZuOklYn1nuEwyJLYBLDgiahzbJibUIIA97s3UAn0abXnBA/132'},
+       {text:"北京的summer获得25元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJL0dlw0MeyN0IkfibwsZg44a63NSOyhuHA1mBMH2aeYnZaZM4u3sibHduLMFaNMg9vfL36icR6V2dpw/132'},
+       {text:"北京的智慧营销获得50元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/pQMwuN6FBS6FqcmNGshnVCaq21BrJjIBXda2KItfvNKV6ueEsTP2TGCicLTFMLyhAXpxdkFak7U9KfInEJKfJiag/132'},
+       {text:"北京的智慧营销获得10元返利",avatarUrl:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLOAUPwBj4EPNUSaS3uRYUXbKsDqVIwD8pfO3yr0fQ4F9hj8jTbo1nAqtOooiaib59ZRVZ4a8rsZiazg/132'}
         ]
     };
   },
