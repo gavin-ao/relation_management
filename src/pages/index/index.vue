@@ -93,10 +93,14 @@ export default {
           var data = res.data;
           if (data.success) {
             that.banner = [];
-            for(var i = 0;i<data.filePathList.length;i++){
-              that.banner.push(that.$store.state.board.urlHttp+data.filePathList[i])
+            if(data.filePathList&&data.filePathList.length){
+              for(var i = 0;i<data.filePathList.length;i++){
+                that.banner.push(that.$store.state.board.urlHttp+data.filePathList[i])
+              }
             }
-            that.channel = data.catgList;
+            if(data.catgList&&data.catgList.length){
+              that.channel = data.catgList;
+            }
             // that.rewardText = data.rebateList;
             // if(that.rewardText.length>0){
             //   for(var i=0;i<that.rewardText.length;i++){

@@ -17,8 +17,8 @@ const state = {
   productInfos:{},
   goToLink:'',
   share:false,
-  appid:'wxef5d2c8115a34065',
-  secret:'cb91e07ac0071dce2d304afcc26b6b83',
+  appid:'wx0e8660984c4eb63b',
+  secret:'a515e163df7c7237ceb1154dee8bbde7',
   headPic:[],
   // urlHttp:'https://dataanalysis.easy7share.com'
   urlHttp:'https://erm.easy7share.com'

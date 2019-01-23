@@ -36,7 +36,7 @@ export default {
     },
     "tabBar": {
       "backgroundColor": "#F5F5F5",
-      "borderStyle": "#FFF",
+      "borderStyle": "white",
       "selectedColor": "#ED1709",
       "color": "#666",
       "list": [{
