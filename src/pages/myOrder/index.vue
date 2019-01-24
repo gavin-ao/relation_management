@@ -6,9 +6,9 @@
           <div class="titleText">
             <p>
               <span>{{items.time}}</span>
-              <!--<span v-if="items.state">已完成</span>-->
-              <span>已完成</span>
-              <!--<span class="payment" v-else @click="continuePay(items.orderId,item)">去付款></span>-->
+              <span v-if="items.state">已完成</span>
+              <!--<span>已完成</span>-->
+              <span class="payment" v-else @click="continuePay(items.orderId,item)">去付款></span>
             </p>
           </div>
           <div class="buyGoods">

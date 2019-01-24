@@ -142,7 +142,8 @@
         info: {},
         buyGoodsNum: 1,
         totalPrices: 0,
-        discountPrice:0
+        discountPrice:0,
+        firstJump:undefined //不允许重复点击
       };
     },
     components: {},
@@ -157,6 +158,7 @@
         this.buyGoodsNum = 1;
         this.totalPrices = 0;
         this.discountPrice = 0;
+        this.firstJump = true;
       },
       pay() {
         // if (this.address.name && this.address.address) {
@@ -170,43 +172,99 @@
             addrId: that.address.addrId,
             "detailList": [{"commodityId": that.commodityId, "amount": that.buyGoodsNum}]
           })
-          wx.request({
-            url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
-            method: "post",
-            data: {"sessionID": that.$store.state.board.sessionID, orderJson: orderJson},
-            header: {'content-type': 'application/x-www-form-urlencoded'},
-            success: function (res) {
-              console.log(res)
-              if (res.data.success) {
-                wx.request({
-                  url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
-                  method: "post",
-                  data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
-                  header: {'content-type': 'application/x-www-form-urlencoded'},
-                  success: function (res) {
-                    console.log(res)
-                    if (res.data.success) {
-                      wx.redirectTo({
-                        url: '/pages/orderCompletion/main'
-                      })
-                    } else {
+          console.log("sessionID "+that.$store.state.board.sessionID);
+          console.log("orderJson "+orderJson);
+          if(that.firstJump){
+            that.firstJump = false;
+            wx.request({
+              url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
+              method: "post",
+              data: {"sessionID": that.$store.state.board.sessionID, orderJson: orderJson},
+              header: {'content-type': 'application/x-www-form-urlencoded'},
+              success: function (res) {
+                console.log(res)
+                if (res.data.success) {
+                  console.log(res.data.payRequest.timeStamp)
+                  console.log(res.data.payRequest.nonceStr)
+                  console.log(res.data.payRequest.packageStr)
+                  console.log(res.data.payRequest.signType)
+                  console.log(res.data.payRequest.paySign)
+                  //小程序发起微信支付
+                  wx.requestPayment({
+                    timeStamp: res.data.payRequest.timeStamp,
+                    nonceStr: res.data.payRequest.nonceStr,
+                    package: res.data.payRequest.packageStr,
+                    signType: 'MD5',
+                    paySign: res.data.payRequest.paySign,
+                    success: function (event) {
+                      //success
+                      console.log(event);
                       wx.showToast({
-                        title: res.data.msg,
-                        icon: 'none',
+                        title: '支付成功',
+                        icon: 'success',
                         duration: 2000
-                      })
+                      });
+                      wx.request({
+                        url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+                        method: "post",
+                        data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
+                        header: {'content-type': 'application/x-www-form-urlencoded'},
+                        success: function (res) {
+                          console.log(res)
+                          if (res.data.success) {
+                            wx.redirectTo({
+                              url: '/pages/orderCompletion/main'
+                            })
+                          } else {
+                            wx.showToast({
+                              title: res.data.msg,
+                              icon: 'none',
+                              duration: 2000
+                            })
+                          }
+                        }
+                      });
+                    },
+                    fail: function (error) {
+                      //fail
+                      console.log("支付失败")
+                      console.log(error)
+                    },
+                    complete: function () {
+                      //complete
+                      console.log("pay complete")
                     }
-                  }
-                })
-              } else {
-                wx.showToast({
-                  title: res.data.msg,
-                  icon: 'none',
-                  duration: 2000
-                })
+                  })
+                  // wx.request({
+                  //   url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+                  //   method: "post",
+                  //   data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
+                  //   header: {'content-type': 'application/x-www-form-urlencoded'},
+                  //   success: function (res) {
+                  //     console.log(res)
+                  //     if (res.data.success) {
+                  //       wx.redirectTo({
+                  //         url: '/pages/orderCompletion/main'
+                  //       })
+                  //     } else {
+                  //       wx.showToast({
+                  //         title: res.data.msg,
+                  //         icon: 'none',
+                  //         duration: 2000
+                  //       })
+                  //     }
+                  //   }
+                  // })
+                } else {
+                  wx.showToast({
+                    title: res.data.msg,
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }
               }
-            }
-          })
+            })
+          }
         } else {
           wx.showModal({
             title: "地址无效", //提示的内容,
@@ -248,10 +306,10 @@
           this.$store.state.board.productInfos.buyGoodsNum--
         }
         if(this.discount){
-          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
-          this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
+          this.totalPrices = (Number(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
+          this.discountPrice = (Number(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
         }else{
-          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+          this.totalPrices = (Number(this.info.prices) * this.buyGoodsNum).toFixed(2)
         }
       },
       addGoodsNum() {
@@ -259,10 +317,10 @@
         this.buyGoodsNum++;
         this.$store.state.board.productInfos.buyGoodsNum++;
         if(this.discount){
-          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
-          this.discountPrice = (parseInt(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
+          this.totalPrices = (Number(this.info.prices) * this.buyGoodsNum*0.95).toFixed(2)
+          this.discountPrice = (Number(this.info.prices) * this.buyGoodsNum*0.05).toFixed(2)
         }else{
-          this.totalPrices = (parseInt(this.info.prices) * this.buyGoodsNum).toFixed(2)
+          this.totalPrices = (Number(this.info.prices) * this.buyGoodsNum).toFixed(2)
         }
       },
       async getDetail() {
@@ -280,10 +338,10 @@
               that.info.filePath = that.$store.state.board.urlHttp + that.info.filePath;
               that.address = res.data.addr;
               if(that.discount){
-                that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2)
-                that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2)
+                that.totalPrices = (Number(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2)
+                that.discountPrice = (Number(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2)
               }else{
-                that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum).toFixed(2)
+                that.totalPrices = (Number(that.info.prices) * that.buyGoodsNum).toFixed(2)
               }
               // that.totalPrices = (parseInt(that.info.prices) * that.buyGoodsNum*0.95).toFixed(2);
               // that.discountPrice = (parseInt(that.info.prices) * that.buyGoodsNum*0.05).toFixed(2);
