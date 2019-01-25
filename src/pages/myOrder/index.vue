@@ -7,8 +7,7 @@
             <p>
               <span>{{items.time}}</span>
               <span v-if="items.state">已完成</span>
-              <!--<span>已完成</span>-->
-              <span class="payment" v-else @click="continuePay(items.orderId,item)">去付款></span>
+              <span class="payment"  v-else @click="continuePay(items.orderId,item)">去付款></span>
             </p>
           </div>
           <div class="buyGoods">
@@ -97,10 +96,67 @@
       },
       continuePay(orderId,item){
         var that = this;
+        var appId=that.$store.state.board.appid;
+        var storeId ="1";
+        var payRequest;
+        console.log(that.$store.state.board.sessionID);
+        wx.request({
+          url: that.$store.state.board.urlHttp + "/wechatapi/order/prepay",
+          method: "post",
+          data: {"sessionID":that.$store.state.board.sessionID,"appId": appId, "storeId": storeId,"outTradeNo":orderId},
+          header: {'content-type': 'application/x-www-form-urlencoded'},
+          success: function (res) {
+            console.log(res)
+            if (res.data.success) {
+              payRequest = res.data.payRequest;
+              that.pay(payRequest,that.$store.state.board.sessionID,orderId,item)
+            } else {
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          }
+        });
+      },
+
+      pay(payRequest,that,orderId,item){
+        console.log(payRequest);
+        wx.requestPayment({
+          timeStamp: payRequest.timeStamp,
+          nonceStr: payRequest.nonceStr,
+          package: payRequest.packageStr,
+          signType: 'MD5',
+          paySign: payRequest.paySign,
+          success: function (event) {
+            //success
+            console.log(event);
+            wx.showToast({
+              title: '支付成功',
+              icon: 'success',
+              duration: 2000
+            });
+            that.completionOfPayment(that,orderId,item);
+          },
+          fail: function (error) {
+            //fail
+            console.log("支付失败")
+            console.log(error)
+          },
+          complete: function () {
+            //complete
+            console.log("pay complete")
+          }
+        })
+
+      }
+      ,
+      completionOfPayment(that,orderId,item){
         wx.request({
           url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
           method: "post",
-          data: {"sessionID": that.$store.state.board.sessionID, orderId: orderId,},
+          data: {"sessionID": that.$store.state.board.sessionID, orderId: orderId},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
             console.log(res)
