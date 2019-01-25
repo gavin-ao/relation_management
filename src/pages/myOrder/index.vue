@@ -99,7 +99,6 @@
         var appId=that.$store.state.board.appid;
         var storeId ="1";
         var payRequest;
-        console.log(that.$store.state.board.sessionID);
         wx.request({
           url: that.$store.state.board.urlHttp + "/wechatapi/order/prepay",
           method: "post",
