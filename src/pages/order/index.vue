@@ -179,7 +179,8 @@
             wx.request({
               url: that.$store.state.board.urlHttp + "/wechatapi/order/submitOrder",
               method: "post",
-              data: {"sessionID": that.$store.state.board.sessionID, orderJson: orderJson,"appId":that.$store.state.board.appid},
+              data: {"sessionID": that.$store.state.board.sessionID, orderJson: orderJson,
+                "appId":that.$store.state.board.appid,"storeId":"1"},
               header: {'content-type': 'application/x-www-form-urlencoded'},
               success: function (res) {
                 console.log(res)
