@@ -2,7 +2,7 @@
   <div class="index">
     <div class="swiper">
       <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
-        <block v-for="(item, index) in banner " :key="index">
+        <block v-for="(item, index) in banner" :key="index">
           <swiper-item class="swiper-item">
             <image :src="item" class="slide-image" />
           </swiper-item>
@@ -82,14 +82,13 @@ export default {
   methods: {
     async getData() {
       var that =  this;
-      console.log(5555)
       wx.request({
         url: that.$store.state.board.urlHttp + '/wechatapi/commodity/findCommodityCatgList',
         method: "POST",
         data:{sessionID:that.$store.state.board.sessionID},
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
-          console.log(res)
+          // console.log(res)
           var data = res.data;
           if (data.success) {
             that.banner = [];
@@ -128,7 +127,7 @@ export default {
           data:{sessionID:that.$store.state.board.sessionID,invitationId: that.$store.state.board.otherInvitation},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
-            console.log(res)
+            // console.log(res)
             var data = res.data;
             if (data.success) {
 
@@ -153,10 +152,9 @@ export default {
     },
     categoryList(item,index) {
       var that = this;
-      console.log(index)
+      // console.log(index)
       for(var i=0;i<that.channel.length;i++){
         if(i == index){
-          console.log("bbbb")
           that.channel[i].flag = true;
         }else{
           that.channel[i].flag = false;
@@ -168,7 +166,7 @@ export default {
         data:{catgId: item.catgId,sessionID:that.$store.state.board.sessionID},
         header: {'content-type': 'application/x-www-form-urlencoded'},
         success: function (res) {
-          console.log(res)
+          // console.log(res)
           if (res.statusCode == 200 ) {
             that.newCategoryList = res.data.commodityList;
             for(var i = 0;i<that.newCategoryList.length;i++){
