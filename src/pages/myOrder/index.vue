@@ -115,7 +115,7 @@
             console.log(res)
             if (res.data.success) {
               payRequest = res.data.payRequest;
-              that.pay(payRequest,that.$store.state.board.sessionID,orderId,item)
+              that.pay(payRequest,that,orderId,item)
             } else {
               wx.showToast({
                 title: res.data.msg,
@@ -199,6 +199,7 @@
       },
       completionOfPayment(that,orderId,item){
         console.log(item)
+        console.log("订单号："+orderId)
         wx.request({
           url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
           method: "post",
@@ -210,7 +211,7 @@
               item.prices = item.unitPrice;
               item.buyGoodsNum = item.amount;
               var itemf = encodeURIComponent(JSON.stringify(item));
-              wx.redirectTo({
+              wx.navigateTo({
                 url: '/pages/orderCompletion/main?item='+itemf
               })
             } else {
