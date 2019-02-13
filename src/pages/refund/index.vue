@@ -142,6 +142,7 @@
       return {
         openId: "",
         commodityName: "",
+        commodityNameAll:"",
         totalFee: 0,
         refundFee: 0,
         firstJump: undefined, //不允许重复点击
@@ -164,18 +165,6 @@
     },
     components: {},
     methods: {
-      // initData() {
-      //   this.commodityId = '';
-      //   this.info = {};
-      //   this.addressId = '';
-      //   this.listData = [];
-      //   this.address = {};
-      //   this.allPrise = "";
-      //   this.buyGoodsNum = 1;
-      //   this.totalPrices = 0;
-      //   this.discountPrice = 0;
-      //   this.firstJump = true;
-      // },
       /**
        * 退款处理方式
        */
@@ -208,6 +197,7 @@
             console.log(res);
             if (res.data.success) {
               that.commodityName = cutOutSubString(res.data.commodityName, 20, true);
+              that.commodityNameAll = res.data.commodityName;
               that.totalFee = res.data.totalFee;
               that.refundFee = res.data.refundFee;
               that.transactionDate = new Date(res.data.transactionDate).toLocaleString()
@@ -234,16 +224,7 @@
           } else if (!that.remarks.trim()) {
             modelT("请填写备注");
           } else {
-            console.log("session" + that.$store.state.board.sessionID)
-            console.log("退款方式：" + that.processingModeArray[that.processingModeIndex])
-            console.log("退款原因：" + that.refundReasonArray[that.refundReasonIndex])
-            console.log("电话号码：" + that.mobilePhone.trim())
-            console.log("备注：" + that.remarks.trim())
-            console.log("订单id：" + that.orderId)
-            console.log("门店id：" + 1)
-            console.log("商品名称：" + that.commodityName)
-            console.log(that.urlTobase64)
-            var datas = that.$store.state.board.userBasicInfos;
+            var datas = {}
             datas.sessionID = that.$store.state.board.sessionID;
             datas.storeId = "1";
             datas.paramJsonArr = JSON.stringify(that.urlTobase64);
@@ -252,6 +233,8 @@
             datas.refundReason = that.refundReasonArray[that.refundReasonIndex];
             datas.mobilePhone = that.mobilePhone.trim();
             datas.remarks = that.remarks.trim();
+            datas.commodityName = that.commodityNameAll;
+            console.log(datas)
             wx.request({
               url: that.$store.state.board.urlHttp + "/wechatapi/order/uploadRefundInfo",
               method: "POST",
@@ -259,8 +242,9 @@
               header: {'content-type': 'application/x-www-form-urlencoded'},
               success: function (res) {
                 if (res.data.success) {
-                  wx.navigateTo({
-                    url: '/pages/showPages/main?travelsId=' + res.data.travelsId
+                  modelT("退款申请成功");
+                  wx.switchTab({
+                    url: '/pages/myOrder/main'
                   })
                 } else {
                   utils.modelT("上传失败，请重新上传。");
