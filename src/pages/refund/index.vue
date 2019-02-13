@@ -65,37 +65,37 @@
         <div class="purchaseImmediately">￥{{refundFee}}</div>
       </div>
       <div class="seladdressCon">
-        <div class="shareFriend">
+        <div class="shareFriend" style="vertical-align: top;">
           手机号码
         </div>
         <div class="purchaseImmediately">
-          <input type="text" placeholder="请输入手机号码" v-model="mobilePhone" style="font-size: 14px"/>
+          <input type="number" placeholder="请输入手机号码" v-model="mobilePhone" placeholder-style="color: rgba(187, 187, 187, 1);font-size: 32rpx;"  maxlength="11"/>
+        </div>
+      </div>
+      <div class="seladdressCon">
+        <div class="shareFriend" style="vertical-align: top;">
+          备注
+        </div>
+        <div class="purchaseImmediately" >
+          <input type="text" placeholder="请输入备注" v-model="remarks" placeholder-style="color: rgba(187, 187, 187, 1);font-size: 32rpx;" maxlength="50"/>
         </div>
       </div>
       <div class="seladdressCon">
         <div class="shareFriend">
-          备注
+          图片举报
         </div>
         <div class="purchaseImmediately">
-          <input type="text" placeholder="请输入备注" v-model="remarks" style="font-size: 14px"/>
+          可上传5张图片
         </div>
-        <div class="seladdressCon">
-          <div class="shareFriend">
-            图片举报
-          </div>
-          <div class="purchaseImmediately">
-            可上传5张图片
-          </div>
-          <div class="relImg" style="display: block;">
-            <div class="uploadImg" v-if="selFlag == true">
-              <div v-for="(item,index) in selImg" :key="index">
-                <img :src="item" alt="">
-                <p @click="deleteImg" :data-index="index"><i class="icon iconfont icon-shanchu"></i></p>
-              </div>
+        <div class="relImg" style="display: block;">
+          <div class="uploadImg" v-if="selFlag == true">
+            <div v-for="(item,index) in selImg" :key="index">
+              <img :src="item" alt="">
+              <p @click="deleteImg" :data-index="index"><i class="icon iconfont icon-shanchu"></i></p>
             </div>
-            <div class="relSelImg">
-              <i class="icon iconfont icon-xiangji1" @click="changeImg"></i>
-            </div>
+          </div>
+          <div class="relSelImg">
+            <i class="icon iconfont icon-xiangji1" @click="changeImg"></i>
           </div>
         </div>
       </div>
@@ -117,10 +117,11 @@
 
   export default {
     onLoad(option) {
-      // this.initData();
+      //初始化信息
+      this.initData();
       var that = this;
       this.orderId = option.id
-      console.log("订单id: " + this.orderId)
+      //读取订单相关信息
       this.refundDetail();
       that.selImg = [];
       that.urlTobase64 = [];
@@ -130,6 +131,7 @@
       wx.setNavigationBarTitle({
         title: "申请退款"
       });
+      //时间格式化
       Date.prototype.toLocaleString = function () {
         return this.getFullYear() + "-" + ((this.getMonth() + 1) > 9 ? (this.getMonth() + 1) : '0' + (this.getMonth() + 1)) + "-" + (this.getDate() > 9 ? this.getDate() : "0" + this.getDate()) + " " + (this.getHours() > 9 ? this.getHours() : "0" + this.getHours()) + ":" + (this.getMinutes() > 9 ? this.getMinutes() : "0" + this.getMinutes());
       };
@@ -165,8 +167,15 @@
     },
     components: {},
     methods: {
+      //初始化信息
+      initData() {
+        this.mobilePhone = ''; //手机号码
+        this.remarks = ''; //备注
+        this.processingModeIndex = -1; //处理方式下标 -1
+        this.refundReasonIndex = -1; //退款原因下标 -1
+      },
       /**
-       * 退款处理方式
+       * 选择退款处理方式
        */
       processingModeChange(e) {
         // console.log('乔丹选的是', this.processingModeArray[e.mp.detail.value])
@@ -178,23 +187,24 @@
         this.processingModeIndex = e.mp.detail.value
       },
       /**
-       * 退款原因
+       * 选择退款原因
        * @param e
        */
       refundReasonChange(e) {
         // console.log('乔丹选的是', this.refundReasonArray[e.mp.detail.value])
         this.refundReasonIndex = e.mp.detail.value
       },
+      //读取订单相关信息
       async refundDetail() {
         var that = this;
-        console.log(that.orderId)
+        // console.log(that.orderId)
         wx.request({
           url: that.$store.state.board.urlHttp + "/wechatapi/order/refundDetail",
           method: "post",
           data: {"sessionID": that.$store.state.board.sessionID, "orderId": that.orderId},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
-            console.log(res);
+            // console.log(res);
             if (res.data.success) {
               that.commodityName = cutOutSubString(res.data.commodityName, 20, true);
               that.commodityNameAll = res.data.commodityName;
@@ -234,7 +244,7 @@
             datas.mobilePhone = that.mobilePhone.trim();
             datas.remarks = that.remarks.trim();
             datas.commodityName = that.commodityNameAll;
-            console.log(datas)
+            // console.log(datas)
             wx.request({
               url: that.$store.state.board.urlHttp + "/wechatapi/order/uploadRefundInfo",
               method: "POST",
@@ -243,11 +253,20 @@
               success: function (res) {
                 if (res.data.success) {
                   modelT("退款申请成功");
-                  wx.switchTab({
-                    url: '/pages/myOrder/main'
+                  wx.showToast({
+                    title: "成功",
+                    icon: 'succes',
+                    duration: 2000,
+                    success:function () {
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '/pages/myOrder/main'
+                        })
+                      },2000)
+                    }
                   })
                 } else {
-                  utils.modelT("上传失败，请重新上传。");
+                  modelT("上传失败，请重新上传。");
                 }
               }
             });
