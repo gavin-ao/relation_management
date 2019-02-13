@@ -203,26 +203,30 @@
                       wx.showToast({
                         title: '支付成功',
                         icon: 'success',
-                        duration: 2000
-                      });
-                      wx.request({
-                        url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
-                        method: "post",
-                        data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
-                        header: {'content-type': 'application/x-www-form-urlencoded'},
-                        success: function (res) {
-                          console.log(res)
-                          if (res.data.success) {
-                            wx.redirectTo({
-                              url: '/pages/orderCompletion/main'
-                            })
-                          } else {
-                            wx.showToast({
-                              title: res.data.msg,
-                              icon: 'none',
-                              duration: 2000
-                            })
-                          }
+                        duration: 2000,
+                        success:function () {
+                          setTimeout(function () {
+                            wx.request({
+                              url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
+                              method: "post",
+                              data: {"sessionID": that.$store.state.board.sessionID, orderId: res.data.orderId,},
+                              header: {'content-type': 'application/x-www-form-urlencoded'},
+                              success: function (res) {
+                                console.log(res)
+                                if (res.data.success) {
+                                  wx.navigateTo({
+                                    url: '/pages/orderCompletion/main'
+                                  })
+                                } else {
+                                  wx.showToast({
+                                    title: res.data.msg,
+                                    icon: 'none',
+                                    duration: 2000
+                                  })
+                                }
+                              }
+                            });
+                          },2000)
                         }
                       });
                     },
