@@ -102,5 +102,43 @@ function login(that, flag, func) {
 }
 
 module.exports = {
-  login: login
+  login: login,
+  cutOutSubString:cutOutSubString,
+  modelT:modelT
+}
+//(串,长度,增加...)
+function cutOutSubString(str, len, hasDot){
+  var newLength = 0;
+  var newStr = "";
+  var chineseRegex = /[^\x00-\xff]/g;
+  var singleChar = "";
+  var strLength = str.replace(chineseRegex, "**").length;
+  for (var i = 0; i < strLength; i++) {
+    singleChar = str.charAt(i).toString();
+    if (singleChar.match(chineseRegex) != null) {
+      newLength += 2;
+    }
+    else {
+      newLength++;
+    }
+    if (newLength > len) {
+      break;
+    }
+    newStr += singleChar;
+  }
+
+  if (hasDot && strLength > len) {
+    newStr += "...";
+  }
+  return newStr;
+}
+function modelT(msg) {
+  if (!msg) {
+    msg = "数据请求失败，请稍后再试。"
+  }
+  wx.showToast({
+    title: msg,
+    icon: 'none',
+    duration: 2000
+  })
 }
