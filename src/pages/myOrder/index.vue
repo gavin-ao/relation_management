@@ -6,8 +6,13 @@
           <div class="titleText">
             <p>
               <span>{{items.time}}</span>
-              <span v-if="items.state == 1"><span class="payment" @click="orderRefund(items.orderId,item)">申请退款</span>&nbsp;已完成</span>
+              <span v-if="items.state == 1"><span class="payment" @click="orderRefund(items.orderId,item)">申请退款</span>&nbsp;已支付</span>
               <span v-if="items.state == 3">退款成功</span>
+              <span v-if="items.state == 4">退款中</span>
+              <span v-if="items.state == 5">同意退款</span>
+              <span v-if="items.state == 6">拒绝退款</span>
+              <span v-if="items.state == -1">已取消</span>
+              <span v-if="items.state == 2">已完成</span>
               <span class="payment" v-if="items.state == 0" @click="continuePay(items.orderId,item)">去付款></span>
               <!--<span class="payment" v-else @click="continuePay(items.orderId,item)">去付款></span>-->
             </p>
@@ -153,40 +158,44 @@
       },
       orderRefund(orderId,item){
         var that = this;
+        console.log(orderId)
+        wx.navigateTo({
+          url: "/pages/refund/main?id=" + orderId
+        });
         // console.log(item)
-        wx.showModal({
-          title:"提示",
-          content:"确认是否申请退款？",
-          success(res){
-            if ((res.confirm)){
-              console.log("用户申请退款")
-              wx.request({
-                url: that.$store.state.board.urlHttp + "/wechatapi/order/orderRefund",
-                method: "post",
-                data: {"sessionID": that.$store.state.board.sessionID, orderId: orderId,storeId:"1"},
-                header: {'content-type': 'application/x-www-form-urlencoded'},
-                success: function (res) {
-                  if (res.data.success) {
-                    item.prices = item.unitPrice;
-                    item.buyGoodsNum = item.amount;
-                    var itemf = encodeURIComponent(JSON.stringify(item));
-                    wx.redirectTo({
-                      url: '/pages/orderCompletion/main?item='+itemf
-                    })
-                  } else {
-                    wx.showToast({
-                      title: res.data.msg,
-                      icon: 'none',
-                      duration: 2000
-                    })
-                  }
-                }
-              })
-            } else if(res.cancel){
-              console.log("用户取消退款")
-            }
-          }
-        })
+        // wx.showModal({
+        //   title:"提示",
+        //   content:"确认是否申请退款？",
+        //   success(res){
+        //     if ((res.confirm)){
+        //       console.log("用户申请退款")
+        //       wx.request({
+        //         url: that.$store.state.board.urlHttp + "/wechatapi/order/orderRefund",
+        //         method: "post",
+        //         data: {"sessionID": that.$store.state.board.sessionID, orderId: orderId,storeId:"1"},
+        //         header: {'content-type': 'application/x-www-form-urlencoded'},
+        //         success: function (res) {
+        //           if (res.data.success) {
+        //             item.prices = item.unitPrice;
+        //             item.buyGoodsNum = item.amount;
+        //             var itemf = encodeURIComponent(JSON.stringify(item));
+        //             wx.redirectTo({
+        //               url: '/pages/orderCompletion/main?item='+itemf
+        //             })
+        //           } else {
+        //             wx.showToast({
+        //               title: res.data.msg,
+        //               icon: 'none',
+        //               duration: 2000
+        //             })
+        //           }
+        //         }
+        //       })
+        //     } else if(res.cancel){
+        //       console.log("用户取消退款")
+        //     }
+        //   }
+        // })
       },
       completionOfPayment(that,orderId,item){
         console.log(item)
