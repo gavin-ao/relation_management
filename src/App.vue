@@ -10,7 +10,7 @@
 
       console.log(option)
       var that = this;
-      if(option.path == 'pages/logs/main'||option.path == 'pages/authorize/main'||option.path == 'pages/showPages/main'||option.path == 'pages/index/main'||option.path == 'pages/goods/main'||option.path == 'pages/order/main'||option.path == 'pages/my/main'||option.path == 'pages/myOrder/main'||option.path == 'pages/orderCompletion/main'){
+      if(option.path == 'pages/logs/main'||option.path == 'pages/authorize/main'||option.path == 'pages/showPages/main'||option.path == 'pages/index/main'||option.path == 'pages/order/main'||option.path == 'pages/my/main'||option.path == 'pages/myOrder/main'||option.path == 'pages/orderCompletion/main'){
         if(option.query.myInvitation){
           that.$store.state.board.otherInvitation = option.query.myInvitation
         }else{
