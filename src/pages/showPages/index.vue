@@ -49,12 +49,14 @@
         checked: false,
         qrcodeUrl: '',
         ctxHeight: 650,
+        commodityId:'',
         backImg: require('../../../static/img/shareBack.png')
       }
     },
 
     onLoad() {
-
+      this.commodityId = this.$root.$mp.query.commodityId;
+      console.log("commodityId: "+this.commodityId)
     },
     onShareAppMessage(res) {
       var that = this;
@@ -64,10 +66,13 @@
       }
 
       var myInvitation = that.$store.state.board.myInvitation
-      var path = "/pages/logs/main";
+
+      // var path = "/pages/logs/main";
+      var path = "pages/goods/main";
 
       if ( myInvitation) {
-        path = path + "?myInvitation=" + myInvitation
+        path = path + "?myInvitation=" + myInvitation+"&id="+this.commodityId
+        console.log("分享的路径： "+path);
       } else {
 
       }
