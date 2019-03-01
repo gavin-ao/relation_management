@@ -159,6 +159,9 @@
             })
             utils.login(that, false, function (sessionId) {
               console.log(333333)
+              if (that.$store.state.board.otherInvitation) {
+                that.helpMapping();
+              }
               that.goodsDetail();
               // wx.redirectTo({
               //   // url: '/pages/addaddress/main'
@@ -224,6 +227,28 @@
       wxParse
     },
     methods: {
+      helpMapping(){
+        var that = this;
+          wx.request({
+            url: that.$store.state.board.urlHttp + '/wechatapi/service/syncInvitation',
+            method: "POST",
+            data:{sessionID:that.$store.state.board.sessionID,invitationId: that.$store.state.board.otherInvitation},
+            header: {'content-type': 'application/x-www-form-urlencoded'},
+            success: function (res) {
+              // console.log(res)
+              var data = res.data;
+              if (data.success) {
+
+              }else{
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            }
+          })
+      },
       helpInfoss() {
         var that = this;
         console.log("授权成功");
@@ -232,6 +257,7 @@
           console.log("ddd： " + that.$store.state.board.otherInvitation)
           if (that.$store.state.board.otherInvitation) {
             console.log("授权成功")
+            that.helpMapping();
             that.goodsDetail();
           }
         });
