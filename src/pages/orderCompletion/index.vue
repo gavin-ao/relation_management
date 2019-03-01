@@ -56,6 +56,10 @@
   //   login,
   // } from '../../utils'
   export default {
+    onLoad(option){
+      console.log("进入订单完成页面：commodityId "+option.commodityId)
+      this.commodityId = option.commodityId;
+    },
     onShow() {
       wx.setNavigationBarTitle({
         title: "订单完成"
@@ -76,7 +80,8 @@
         userInfo: {},
         content: '',
         phone: '',
-        orders: {}
+        orders: {},
+        commodityId:''
       };
     },
     components: {},
@@ -94,8 +99,9 @@
             console.log(res)
             if (res.data.success) {
               _this.$store.state.board.myInvitation = res.data.invitation;
+              console.log("订单完成：id "+_this.commodityId);
               wx.navigateTo({
-                url: "/pages/showPages/main"
+                url: "/pages/showPages/main?commodityId="+_this.commodityId
               });
             } else {
               wx.showToast({

@@ -200,6 +200,7 @@
       completionOfPayment(that,orderId,item){
         console.log(item)
         console.log("订单号："+orderId)
+        console.log("商品Id: "+item.commodityId)
         wx.request({
           url: that.$store.state.board.urlHttp + "/wechatapi/order/completionOfPayment",
           method: "post",
@@ -210,9 +211,9 @@
             if (res.data.success) {
               item.prices = item.unitPrice;
               item.buyGoodsNum = item.amount;
-              var itemf = encodeURIComponent(JSON.stringify(item));
+              // var itemf = encodeURIComponent(JSON.stringify(item));
               wx.navigateTo({
-                url: '/pages/orderCompletion/main?item='+itemf
+                url: '/pages/orderCompletion/main?commodityId='+item.commodityId
               })
             } else {
               wx.showToast({

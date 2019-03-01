@@ -214,8 +214,9 @@
                               success: function (res) {
                                 console.log(res)
                                 if (res.data.success) {
+                                  console.log("订单页面：commodityId: "+that.commodityId)
                                   wx.navigateTo({
-                                    url: '/pages/orderCompletion/main'
+                                    url: '/pages/orderCompletion/main?commodityId='+that.commodityId
                                   })
                                 } else {
                                   wx.showToast({

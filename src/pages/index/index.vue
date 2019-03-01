@@ -147,7 +147,7 @@ export default {
     },
     goodsDetail(id,paths) {
       wx.navigateTo({
-        url: "/pages/goods/main?id=" + id+"&paths="+paths
+        url: "/pages/goods/main?id=" + id+"&paths="+paths+"&isInvitation="+false
       });
     },
     categoryList(item,index) {

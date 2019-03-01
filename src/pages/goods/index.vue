@@ -19,92 +19,92 @@
       </div>
     </div>
     <block v-if="tempFlag==true">
-    <div class="swiper">
-      <swiper class="swiper-container" autoplay="true" interval="3000" duration="1000">
-        <block v-for="(item, index) in gallery " :key="index">
-          <swiper-item class="swiper-item">
-            <image :src="item" class="slide-image"/>
-          </swiper-item>
-        </block>
-      </swiper>
-      <!--<button class="share" hover-class="none" open-type="share" value="">分享商品</button>-->
-    </div>
-    <div class="goods-info">
-      <div class="c">
-        <p>{{info.commodityName}}</p>
-        <!--<p>{{info.goods_brief}}</p>-->
-        <p><span class="realPrice">￥{{info.prices}}</span><span class="virtualPrice">￥{{info.suggestPrices}}</span>
-          <span class="monthlySales">月销： {{salesVolume}}</span>
-        </p>
-
-      </div>
-    </div>
-    <div class="productDetail">
-      <div class="productTopNav">
-        <div class="productNav" @click="detailContent('0')">
-          <p :class="{ bottomLines: currentNum==0}">图文详情</p>
-        </div>
-        <div class="productNav" @click="detailContent('1')">
-          <p :class="{ bottomLines: currentNum==1}">产品参数</p>
-        </div>
-        <div class="productNav" @click="detailContent('2')">
-          <p :class="{ bottomLines: currentNum==2}">购买须知</p>
-        </div>
-
-      </div>
-      <div class="detailsInfo" :class="{detailText: currentNum==0}">
-        <div class="detail">
-          <!--<p v-html="goods_desc"></p>-->
-          <!--<wxParse :content="goods_desc"/>-->
-          <block v-for="(item, index) in goods_desc " :key="index">
-            <image :src="item" class="slide-image" mode="widthFix"/>
+      <div class="swiper">
+        <swiper class="swiper-container" autoplay="true" interval="3000" duration="1000">
+          <block v-for="(item, index) in gallery " :key="index">
+            <swiper-item class="swiper-item">
+              <image :src="item" class="slide-image"/>
+            </swiper-item>
           </block>
+        </swiper>
+        <!--<button class="share" hover-class="none" open-type="share" value="">分享商品</button>-->
+      </div>
+      <div class="goods-info">
+        <div class="c">
+          <p>{{info.commodityName}}</p>
+          <!--<p>{{info.goods_brief}}</p>-->
+          <p><span class="realPrice">￥{{info.prices}}</span><span class="virtualPrice">￥{{info.suggestPrices}}</span>
+            <span class="monthlySales">月销： {{salesVolume}}</span>
+          </p>
 
         </div>
       </div>
-      <div class="detailsInfo" :class="{detailText: currentNum==1}">
-        <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
-          暂无内容
+      <div class="productDetail">
+        <div class="productTopNav">
+          <div class="productNav" @click="detailContent('0')">
+            <p :class="{ bottomLines: currentNum==0}">图文详情</p>
+          </div>
+          <div class="productNav" @click="detailContent('1')">
+            <p :class="{ bottomLines: currentNum==1}">产品参数</p>
+          </div>
+          <div class="productNav" @click="detailContent('2')">
+            <p :class="{ bottomLines: currentNum==2}">购买须知</p>
+          </div>
+
         </div>
-        <!--<div v-if="attribute.length!=0" class="attribute">-->
-        <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
-        <!--<div>{{item.name}}</div>-->
-        <!--<div>{{item.value}}</div>-->
-        <!--</div>-->
-        <!--</div>-->
-      </div>
-      <div class="detailsInfo" :class="{detailText: currentNum==2}">
-        <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
-          暂无内容
+        <div class="detailsInfo" :class="{detailText: currentNum==0}">
+          <div class="detail">
+            <!--<p v-html="goods_desc"></p>-->
+            <!--<wxParse :content="goods_desc"/>-->
+            <block v-for="(item, index) in goods_desc " :key="index">
+              <image :src="item" class="slide-image" mode="widthFix"/>
+            </block>
+
+          </div>
         </div>
-        <!--<div class="common-problem">-->
-        <!--<div class="b">-->
-        <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
-        <!--<div class="question-box">-->
-        <!--<text class="spot"></text>-->
-        <!--<text class="question">{{item.question}}</text>-->
-        <!--</div>-->
-        <!--<div class="answer">-->
-        <!--{{item.answer}}-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-      </div>
-    </div>
-    <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
-    <div class="bottom-fixed">
-      <div class="customerService" @click="collect">
-        <div>
-          <img class="collect" alt="" src="/static/images/kefu.png">
+        <div class="detailsInfo" :class="{detailText: currentNum==1}">
+          <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
+            暂无内容
+          </div>
+          <!--<div v-if="attribute.length!=0" class="attribute">-->
+          <!--<div v-for="(item,index) in attribute" :key="index" class="item">-->
+          <!--<div>{{item.name}}</div>-->
+          <!--<div>{{item.value}}</div>-->
+          <!--</div>-->
+          <!--</div>-->
         </div>
-        <div><span>客服</span></div>
+        <div class="detailsInfo" :class="{detailText: currentNum==2}">
+          <div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">
+            暂无内容
+          </div>
+          <!--<div class="common-problem">-->
+          <!--<div class="b">-->
+          <!--<div class="item" v-for="(item, index) in issueList" :key="index">-->
+          <!--<div class="question-box">-->
+          <!--<text class="spot"></text>-->
+          <!--<text class="question">{{item.question}}</text>-->
+          <!--</div>-->
+          <!--<div class="answer">-->
+          <!--{{item.answer}}-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</div>-->
+        </div>
       </div>
-      <div class="shareFriend" @click="shareFriend" v-if="share==true">
-        分享给好友
+      <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
+      <div class="bottom-fixed">
+        <div class="customerService" @click="collect">
+          <div>
+            <img class="collect" alt="" src="/static/images/kefu.png">
+          </div>
+          <div><span>客服</span></div>
+        </div>
+        <div class="shareFriend" @click="shareFriend" v-if="share==true">
+          分享给好友
+        </div>
+        <div class="purchaseImmediately" @click="bug">立即购买</div>
       </div>
-      <div class="purchaseImmediately" @click="bug">立即购买</div>
-    </div>
     </block>
   </div>
 </template>
@@ -112,17 +112,27 @@
 <script>
   // import { get, post, toLogin, login, getStorageOpenid } from "../../utils";
   import wxParse from "mpvue-wxparse";
-  import utils from "../../utils/utils.js";;
+  import utils from "../../utils/utils.js";
+
+  ;
 
   export default {
     onLoad(option) {
-        console.log("id: "+option.id)
-        this.goodId = option.id;
-        console.log(this.goodId)
-        // this.paths = that.$root.$mp.query.paths;
-        if(option.myInvitation){
-          this.myInvitation = option.myInvitation
-        }
+      console.log("id: " + option.id)
+      this.goodId = option.id;
+      console.log(this.goodId)
+      // this.paths = that.$root.$mp.query.paths;
+      if (option.myInvitation) {
+        this.myInvitation = option.myInvitation
+      }
+
+      if (option.isInvitation) {
+        console.log("isTnvitation" + option.isInvitation);
+        this.isInvitation = false
+      } else {
+        console.log("isTnvitation1" + option.isInvitation);
+        this.isInvitation = true;
+      }
       //判断是否登录获取用户信息
       // if (login()) {
       //   this.userInfo = login();
@@ -134,18 +144,18 @@
         title: "商品详情页"
       })
     },
-    onShow(option){
-      console.log("option: "+option)
+    onShow(option) {
+      console.log("option: " + option)
       var that = this;
       // that.id = that.id;
       // that.paths = that.$root.$mp.query.paths;
-      console.log("商品id："+that.goodId)
+      console.log("商品id：" + that.goodId)
 
-      if(that.myInvitation != ""){
-        console.log("邀请号："+that.myInvitation)
+      if (that.myInvitation != "") {
+        console.log("邀请号：" + that.myInvitation)
         that.$store.state.board.otherInvitation = that.myInvitation
-      }else{
-        that.$store.state.board.otherInvitation=''
+      } else {
+        that.$store.state.board.otherInvitation = ''
       }
 
       that.initData();
@@ -210,36 +220,41 @@
         productList: [],
         goods_desc: [],
         id: "",
-        goodId:"",
+        goodId: "",
         paths: "",
         userInfo: "",
         goodsId: "",
         allPrise: "",
         currentNum: 0,
         scrollTop: 0,
-        salesVolume:0,
-        myInvitation:'',
+        salesVolume: 0,
+        myInvitation: '',
         helpInfos: false,
-        tempFlag: false
+        tempFlag: false,
+        isInvitation: false
       };
     },
     components: {
       wxParse
     },
     methods: {
-      helpMapping(){
+      helpMapping() {
         var that = this;
-          wx.request({
-            url: that.$store.state.board.urlHttp + '/wechatapi/service/syncInvitation',
-            method: "POST",
-            data:{sessionID:that.$store.state.board.sessionID,invitationId: that.$store.state.board.otherInvitation},
-            header: {'content-type': 'application/x-www-form-urlencoded'},
-            success: function (res) {
-              // console.log(res)
-              var data = res.data;
-              if (data.success) {
+        console.log("ooooo: " + that.isInvitation)
 
-              }else{
+        wx.request({
+          url: that.$store.state.board.urlHttp + '/wechatapi/service/syncInvitation',
+          method: "POST",
+          data: {sessionID: that.$store.state.board.sessionID, invitationId: that.$store.state.board.otherInvitation},
+          header: {'content-type': 'application/x-www-form-urlencoded'},
+          success: function (res) {
+            // console.log(res)
+            var data = res.data;
+            if (data.success) {
+
+            } else {
+              if (that.isInvitation) {
+                console.log("哈哈哈")
                 wx.showToast({
                   title: res.data.msg,
                   icon: 'none',
@@ -247,12 +262,13 @@
                 })
               }
             }
-          })
+          }
+        })
       },
       helpInfoss() {
         var that = this;
         console.log("授权成功");
-        utils.login(that,false, function (sessionID) {
+        utils.login(that, false, function (sessionID) {
           that.helpInfos = false;
           console.log("ddd： " + that.$store.state.board.otherInvitation)
           if (that.$store.state.board.otherInvitation) {
@@ -319,9 +335,9 @@
           success: function (res) {
             console.log(res)
             if (res.data.success) {
-              _this.$store.state.board.myInvitation= res.data.invitation;
+              _this.$store.state.board.myInvitation = res.data.invitation;
               wx.navigateTo({
-                url: "/pages/showPages/main?commodityId="+_this.info.commodityId
+                url: "/pages/showPages/main?commodityId=" + _this.info.commodityId
               });
             } else {
               wx.showToast({
@@ -337,12 +353,12 @@
       async goodsDetail() {
         var that = this;
         that.tempFlag = true;
-        console.log("sessionID："+that.$store.state.board.sessionID)
-        console.log("id："+that.goodId)
+        console.log("sessionID：" + that.$store.state.board.sessionID)
+        console.log("id：" + that.goodId)
         wx.request({
           url: that.$store.state.board.urlHttp + '/wechatapi/commodity/getCommodityById',
           method: "post",
-          data:{commodityId: that.goodId,sessionID:that.$store.state.board.sessionID},
+          data: {commodityId: that.goodId, sessionID: that.$store.state.board.sessionID},
           // data: {commodityId: 3, sessionID: that.$store.state.board.sessionID},
           header: {'content-type': 'application/x-www-form-urlencoded'},
           success: function (res) {
@@ -352,11 +368,11 @@
             if (data.success) {
               that.salesVolume = data.salesVolume;
               that.$store.state.board.share = data.share;
-              that.gallery.push( that.$store.state.board.urlHttp +"/static/file/"+data.commodityVO.filePath);
-              that.$store.state.board.goToLink = that.$store.state.board.urlHttp +"/static/file/"+data.commodityVO.filePath;
-              if ( that.$store.state.board.goToLink) {
+              that.gallery.push(that.$store.state.board.urlHttp + "/static/file/" + data.commodityVO.filePath);
+              that.$store.state.board.goToLink = that.$store.state.board.urlHttp + "/static/file/" + data.commodityVO.filePath;
+              if (that.$store.state.board.goToLink) {
                 wx.getImageInfo({
-                  src:  that.$store.state.board.goToLink,
+                  src: that.$store.state.board.goToLink,
                   success: (res) => {
                     that.$store.state.board.drawPoster = res.path;
                   }
@@ -380,7 +396,7 @@
       }
     },
     computed: {
-      share(){
+      share() {
         return this.$store.state.board.share;
       }
     }
@@ -389,6 +405,7 @@
 <style lang='scss' scoped>
   @import url("~mpvue-wxparse/src/wxParse.css");
   @import "./style.scss";
+
   .authorizes {
     margin: 0 auto;
     font-size: 14px;
@@ -445,7 +462,7 @@
           margin-top: 15px;
           border-radius: 3px;
           box-sizing: border-box;
-          background-color:  #0096D6;
+          background-color: #0096D6;
           color: #fff;
         }
         button[type="default"] {
