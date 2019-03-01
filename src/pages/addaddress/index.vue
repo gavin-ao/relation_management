@@ -8,7 +8,7 @@
     <div class="item">
       <span>手机号码</span>
       <input type="text" placeholder="请输入手机号码" v-model="telNumber"
-             placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;">
+             placeholder-style="color: rgba(136, 136, 136, 1);font-size: 28rpx;" maxlength="11">
     </div>
     <div class="item">
       <span>省市地区</span>
