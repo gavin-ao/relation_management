@@ -59,7 +59,7 @@
             <!--<block v-for="(item, index) in goods_desc " :key="index">-->
               <!--<image :src="item" class="slide-image" mode="widthFix"/>-->
             <!--</block>-->
-            <!-- 显示商品详情-->
+            <!-- 显示商品详情 -->
             <wxParse :content="introduction"/>
 
           </div>
