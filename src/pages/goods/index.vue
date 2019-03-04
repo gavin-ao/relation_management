@@ -56,9 +56,11 @@
           <div class="detail">
             <!--<p v-html="goods_desc"></p>-->
             <!--<wxParse :content="goods_desc"/>-->
-            <block v-for="(item, index) in goods_desc " :key="index">
-              <image :src="item" class="slide-image" mode="widthFix"/>
-            </block>
+            <!--<block v-for="(item, index) in goods_desc " :key="index">-->
+              <!--<image :src="item" class="slide-image" mode="widthFix"/>-->
+            <!--</block>-->
+            <!-- 显示商品详情-->
+            <wxParse :content="introduction"/>
 
           </div>
         </div>
@@ -92,6 +94,7 @@
           <!--</div>-->
         </div>
       </div>
+
       <!--&lt;!&ndash; 大家都在看 &ndash;&gt;-->
       <div class="bottom-fixed">
         <div class="customerService" @click="collect">
@@ -231,7 +234,8 @@
         myInvitation: '',
         helpInfos: false,
         tempFlag: false,
-        isInvitation: false
+        isInvitation: false,
+        introduction:''
       };
     },
     components: {
@@ -369,6 +373,12 @@
               that.salesVolume = data.salesVolume;
               that.$store.state.board.share = data.share;
               that.gallery.push(that.$store.state.board.urlHttp + "/static/file/" + data.commodityVO.filePath);
+              if (data.commodityVO.introduction) {
+                that.introduction = data.commodityVO.introduction;
+              }else{
+                that.introduction ='<div style="margin-top: 20px;font-size: 16px; color: #666666;text-align: center">暂无内容</div>'
+              }
+
               that.$store.state.board.goToLink = that.$store.state.board.urlHttp + "/static/file/" + data.commodityVO.filePath;
               if (that.$store.state.board.goToLink) {
                 wx.getImageInfo({
