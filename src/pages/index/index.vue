@@ -13,7 +13,7 @@
       <swiper class="swiper-container" autoplay="true" interval="3000" circular="true" vertical="true" duration="500">
         <block v-for="(item, index) in rewardText " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item.avatarUrl" class="slide-image" />
+            <image :src="item.avatarUrl" class="slide-image"/>
             <span :title="item.text"> {{item.text}}</span>
           </swiper-item>
         </block>
@@ -33,7 +33,7 @@
       <div class="list" v-for="(subitem, subindex) in newCategoryList" :key="subindex">
         <div class="sublist">
           <div >
-            <img :src="subitem.filePath" alt="">
+            <img :src="subitem.filePath" alt="" @click="goodsDetail(subitem.commodityId,subitem.filePath)">
             <p>{{subitem.commodityName}}</p>
             <p><span class="realPrice">￥{{subitem.prices}}</span><span class="virtualPrice">￥{{subitem.suggestPrices}}</span><span class="purchaseImmediately" @click="goodsDetail(subitem.commodityId,subitem.filePath)">立即购买</span></p>
           </div>
